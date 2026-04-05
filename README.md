@@ -1,35 +1,61 @@
-# AstroZen - Personal Portfolio Website
+# Zeo's Portfolio Page
 
-AstroZen is a minimalist, accessible and responsive portfolio template for your personal portfolio website. It is built with Astro and TailwindCSS.
+Personal CV / landing page for Zoárd Manó Csoltai, built with Astro and deployed on Vercel.
 
-![zen-og](https://github.com/user-attachments/assets/7a72aaae-6652-4cd0-becc-8e6a3c224993)
+## Current Shape
 
-> [!NOTE]
-> The information contained in this template, including names, images, and content, is entirely fictitious and is intended solely to give the design a realistic appearance. Any coincidence with real-life people, events, or situations is purely coincidental. It is recommended that you replace this information with your own information.
+- Two-column desktop homepage with a sticky hero and scrolling content rail
+- Mobile-friendly single-column layout
+- Native writing system powered by Astro content collections
+- Markdown/MDX support for technical posts and case studies
+- Shared site content and metadata driven from `src/config/index.ts`
+- Custom styling, motion, and prose treatment in `src/styles/global.css`
 
-## 🔥 Features
+## Project Structure
 
-- [x] Minimalist design. clean and simple
-- [x] Mobile-first responsive layout
-- [x] SEO-friendly and accessible
-- [x] Easy to customize with a single configuration file
+- `src/pages/index.astro`
+  Homepage
+- `src/pages/writing/index.astro`
+  Writing index
+- `src/pages/writing/[slug].astro`
+  Writing article route
+- `src/content/writing/`
+  Native Markdown/MDX posts
+- `src/config/index.ts`
+  Site metadata and homepage content
+- `src/styles/global.css`
+  Theme tokens, layout polish, motion, prose, and component effects
 
-## ✅ Lighthouse Score
+## Writing Workflow
 
-![performance](https://github.com/user-attachments/assets/4f95e2ca-03f9-4996-9e34-dcd179194c58)
+Add new posts under `src/content/writing/` as `.md` or `.mdx` files with frontmatter.
 
-## 🚀 Getting Started
+Example:
 
-Clone this repository to your local machine using Git.
-
-```scheme
-git clone https://github.com/immois/astro-zen.git
-cd astro-zen
+```md
+---
+title: "Article Title"
+description: "Short summary for cards and metadata."
+published: 2026-04-05
+tags: ["Identity", "Automation"]
+featured: true
+draft: false
+---
 ```
+
+Posts marked `featured: true` can be surfaced on the homepage.
+
+## Commands
 
 | Command        | Action                                       |
 | :------------- | :------------------------------------------- |
-| `pnpm install` | Installs dependencies                        |
-| `pnpm dev`     | Starts local dev server at `localhost:4321`  |
-| `pnpm build`   | Build your production site to `./dist/`      |
-| `pnpm preview` | Preview your build locally, before deploying |
+| `pnpm install` | Install dependencies                         |
+| `pnpm dev`     | Start local dev server at `localhost:4321`   |
+| `pnpm build`   | Build production output to `./dist/`         |
+| `pnpm preview` | Preview the built site locally               |
+
+## Notes
+
+- The site is intended to stay lightweight and Vercel-friendly.
+- Global CSS is imported from `src/layouts/Layout.astro`, so all routes share the same styling.
+- If `pnpm preview` looks stale, run `pnpm build` first and restart preview.
