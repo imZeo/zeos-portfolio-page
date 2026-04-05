@@ -1,17 +1,31 @@
 ---
 import { SITE_CONTENT } from "@config";
+import { getCollection } from "astro:content";
 import Hero from "@components/Hero.astro";
 import Layout from "@layouts/Layout.astro";
 import Experience from "@components/Experience.astro";
 import Projects from "@components/Projects.astro";
 import About from "@components/About.astro";
+import FeaturedWriting from "@components/FeaturedWriting.astro";
 
 import "../styles/global.css";
+
+const featuredWriting = (
+  await getCollection("writing", ({ data }) => !data.draft && data.featured)
+).sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
 ---
 
 <Layout>
-  <Hero {...SITE_CONTENT.hero} />
-  <Experience experience={SITE_CONTENT.experience} />
-  <Projects projects={SITE_CONTENT.projects} />
-  <About {...SITE_CONTENT.about} name={SITE_CONTENT.hero.name} />
+  <div class="md:grid md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:gap-14 lg:gap-20 xl:gap-24">
+    <aside class="md:sticky md:top-28 md:self-start">
+      <Hero {...SITE_CONTENT.hero} />
+    </aside>
+
+    <div>
+      <Experience experience={SITE_CONTENT.experience} />
+      <Projects projects={SITE_CONTENT.projects} />
+      <FeaturedWriting posts={featuredWriting} />
+      <About {...SITE_CONTENT.about} name={SITE_CONTENT.hero.name} />
+    </div>
+  </div>
 </Layout>

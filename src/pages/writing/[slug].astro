@@ -1,0 +1,66 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const writing = await getCollection("writing", ({ data }) => !data.draft);
+
+  return writing.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const navLinks = [
+  { text: "Home", href: "/" },
+  { text: "Writing", href: "/writing" },
+];
+---
+
+<Layout
+  title={`${post.data.title} | Zoárd Manó Csoltai`}
+  description={post.data.description}
+  navLinks={navLinks}
+  mainClass="relative z-10 mx-auto max-w-4xl px-5 lg:px-8"
+>
+  <article class="writing-shell py-16 md:py-24">
+    <a
+      class="mb-10 inline-flex items-center gap-2 text-sm font-medium text-neutral hover:text-white"
+      href="/writing"
+    >
+      <span aria-hidden="true">←</span>
+      Back to writing
+    </a>
+
+    <header class="mb-12 border-b border-white/8 pb-10">
+      <div class="mb-5 flex flex-wrap items-center gap-3 text-sm text-neutral">
+        <time datetime={post.data.published.toISOString()}>
+          {post.data.published.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+        </time>
+        {post.data.tags.map((tag) => (
+          <span class="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/70">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <h1 class="mb-6 font-serif text-5xl font-bold tracking-tightest text-white md:text-7xl">
+        {post.data.title}
+      </h1>
+      <p class="max-w-3xl text-lg leading-8 text-neutral md:text-xl">
+        {post.data.description}
+      </p>
+    </header>
+
+    <div class="article-prose">
+      <Content />
+    </div>
+  </article>
+</Layout>

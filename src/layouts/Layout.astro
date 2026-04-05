@@ -1,22 +1,35 @@
 ---
 import Header from "@components/Header.astro";
+import BackgroundFX from "@components/BackgroundFX.astro";
 import "@fontsource/be-vietnam-pro";
 import "@fontsource-variable/gabarito";
 import { SITE_CONFIG } from "@config";
 import Footer from "@components/Footer.astro";
 
+interface Props {
+  title?: string;
+  description?: string;
+  navLinks?: { text: string; href: string }[];
+  mainClass?: string;
+}
+
 const {
-  title,
-  description,
   siteLogo,
-  navLinks,
   lang,
   author,
   socialLinks,
   socialImage,
-  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
 } = SITE_CONFIG;
 
+const {
+  title = SITE_CONFIG.title,
+  description = SITE_CONFIG.description,
+  navLinks = SITE_CONFIG.navLinks,
+  mainClass = "relative z-10 mx-auto max-w-7xl px-5 lg:px-8",
+} = Astro.props;
+
+const canonicalBase = SITE_CONFIG.canonicalURL ?? Astro.url.origin;
+const canonicalURL = new URL(Astro.url.pathname, canonicalBase).href;
 const ogImgUrl = canonicalURL + socialImage;
 ---
 
@@ -43,8 +56,9 @@ const ogImgUrl = canonicalURL + socialImage;
     <meta property="twitter:image" content={ogImgUrl} />
   </head>
   <body class="bg-black font-sans">
+    <BackgroundFX />
     <Header siteLogo={siteLogo} navLinks={navLinks} />
-    <main class="mx-auto max-w-3xl px-5">
+    <main class={mainClass}>
       <slot />
     </main>
     <Footer author={author} socialLinks={socialLinks} />

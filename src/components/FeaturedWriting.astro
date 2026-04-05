@@ -1,0 +1,79 @@
+---
+interface WritingPost {
+  slug: string;
+  data: {
+    title: string;
+    description: string;
+    published: Date;
+    tags: string[];
+  };
+}
+
+interface Props {
+  posts: WritingPost[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section id="writing" class="py-24">
+  <div class="mb-14 flex items-end justify-between gap-6">
+    <div>
+      <p class="mb-3 text-sm font-medium tracking-[0.2em] text-primary uppercase">
+        Writing
+      </p>
+      <h2 class="font-serif text-4xl font-bold tracking-tighter text-white md:text-5xl">
+        Featured writing
+      </h2>
+    </div>
+
+    <a class="hidden text-sm font-medium text-neutral hover:text-white md:inline-block" href="/writing">
+      See all writing
+    </a>
+  </div>
+
+  <div class="space-y-5">
+    {
+      posts.map((post) => (
+        <article class="rounded-3xl border border-white/8 bg-[#121a23]/80 p-6 backdrop-blur-sm md:p-8">
+          <div class="mb-4 flex flex-wrap items-center gap-3 text-sm text-neutral">
+            <time datetime={post.data.published.toISOString()}>
+              {post.data.published.toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
+            </time>
+            {post.data.tags.slice(0, 3).map((tag) => (
+              <span class="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-white/70">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <h3 class="mb-3 font-serif text-3xl font-semibold text-white md:text-4xl">
+            <a class="hover:text-primary" href={`/writing/${post.slug}`}>
+              {post.data.title}
+            </a>
+          </h3>
+
+          <p class="mb-6 max-w-3xl text-base leading-8 text-neutral md:text-lg">
+            {post.data.description}
+          </p>
+
+          <a
+            class="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-white"
+            href={`/writing/${post.slug}`}
+          >
+            Read article
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+      ))
+    }
+  </div>
+
+  <a class="mt-6 inline-block text-sm font-medium text-neutral hover:text-white md:hidden" href="/writing">
+    See all writing
+  </a>
+</section>

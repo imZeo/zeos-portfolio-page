@@ -1,0 +1,168 @@
+<div class="ripple-background" aria-hidden="true">
+  <canvas class="ripple-background__canvas"></canvas>
+  <div class="ripple-background__tint"></div>
+</div>
+
+<script>
+  const container = document.querySelector(".ripple-background");
+  const canvas = container?.querySelector(".ripple-background__canvas");
+
+  if (!(canvas instanceof HTMLCanvasElement)) {
+    throw new Error("Ripple background canvas was not found.");
+  }
+
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    throw new Error("2D canvas context is not available.");
+  }
+
+  const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const pointer = {
+    x: window.innerWidth * 0.55,
+    y: window.innerHeight * 0.28,
+    targetX: window.innerWidth * 0.55,
+    targetY: window.innerHeight * 0.28,
+    active: false,
+  };
+
+  let width = 0;
+  let height = 0;
+  let frame = 0;
+  let dpr = 1;
+  let time = 0;
+
+  const resize = () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
+    context.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+
+  const movePointer = (x: number, y: number) => {
+    pointer.targetX = x;
+    pointer.targetY = y;
+    pointer.active = true;
+  };
+
+  const resetPointer = () => {
+    pointer.targetX = width * 0.55;
+    pointer.targetY = height * 0.28;
+    pointer.active = false;
+  };
+
+  const draw = () => {
+    frame = window.requestAnimationFrame(draw);
+
+    pointer.x += (pointer.targetX - pointer.x) * 0.14;
+    pointer.y += (pointer.targetY - pointer.y) * 0.14;
+    time += 0.018;
+
+    context.clearRect(0, 0, width, height);
+
+    const spacing = width < 768 ? 34 : 42;
+    const influence = width < 768 ? 130 : 170;
+
+    for (let y = -spacing; y <= height + spacing; y += spacing) {
+      for (let x = -spacing; x <= width + spacing; x += spacing) {
+        const dx = x - pointer.x;
+        const dy = y - pointer.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const normalized = Math.max(0, 1 - distance / influence);
+        const ripple = Math.sin(distance * 0.055 - time * 2.4) * normalized;
+        const drift = Math.sin(time + x * 0.01 + y * 0.008) * 3;
+
+        const offsetX = dx === 0 ? 0 : (dx / distance) * ripple * -12;
+        const offsetY = dy === 0 ? 0 : (dy / distance) * ripple * -12;
+
+        const px = x + drift + offsetX;
+        const py = y + drift * 0.6 + offsetY;
+
+        const glow = normalized * 0.28;
+
+        if (x + spacing <= width + spacing) {
+          const nextDx = x + spacing - pointer.x;
+          const nextDy = y - pointer.y;
+          const nextDistance = Math.sqrt(nextDx * nextDx + nextDy * nextDy);
+          const nextNormalized = Math.max(0, 1 - nextDistance / influence);
+          const nextRipple = Math.sin(nextDistance * 0.055 - time * 2.4) * nextNormalized;
+          const nextOffsetX =
+            nextDx === 0 ? 0 : (nextDx / nextDistance) * nextRipple * -12;
+          const nextOffsetY =
+            nextDy === 0 ? 0 : (nextDy / nextDistance) * nextRipple * -12;
+          const nextDrift = Math.sin(time + (x + spacing) * 0.01 + y * 0.008) * 3;
+          const nextX = x + spacing + nextDrift + nextOffsetX;
+          const nextY = y + nextDrift * 0.6 + nextOffsetY;
+
+          context.beginPath();
+          context.moveTo(px, py);
+          context.lineTo(nextX, nextY);
+          context.strokeStyle = `rgba(96, 165, 250, ${0.025 + glow * 0.18})`;
+          context.lineWidth = 1;
+          context.stroke();
+        }
+
+        if (y + spacing <= height + spacing) {
+          const nextDx = x - pointer.x;
+          const nextDy = y + spacing - pointer.y;
+          const nextDistance = Math.sqrt(nextDx * nextDx + nextDy * nextDy);
+          const nextNormalized = Math.max(0, 1 - nextDistance / influence);
+          const nextRipple = Math.sin(nextDistance * 0.055 - time * 2.4) * nextNormalized;
+          const nextOffsetX =
+            nextDx === 0 ? 0 : (nextDx / nextDistance) * nextRipple * -12;
+          const nextOffsetY =
+            nextDy === 0 ? 0 : (nextDy / nextDistance) * nextRipple * -12;
+          const nextDrift = Math.sin(time + x * 0.01 + (y + spacing) * 0.008) * 3;
+          const nextX = x + nextDrift + nextOffsetX;
+          const nextY = y + spacing + nextDrift * 0.6 + nextOffsetY;
+
+          context.beginPath();
+          context.moveTo(px, py);
+          context.lineTo(nextX, nextY);
+          context.strokeStyle = `rgba(148, 163, 184, ${0.02 + glow * 0.14})`;
+          context.lineWidth = 1;
+          context.stroke();
+        }
+
+        context.beginPath();
+        context.arc(px, py, 1.25 + normalized * 1.4, 0, Math.PI * 2);
+        context.fillStyle = `rgba(191, 219, 254, ${0.08 + glow * 0.35})`;
+        context.fill();
+      }
+    }
+  };
+
+  const handlePointerMove = (event: PointerEvent) => {
+    movePointer(event.clientX, event.clientY);
+  };
+
+  const handlePointerLeave = () => {
+    resetPointer();
+  };
+
+  const cleanup = () => {
+    window.cancelAnimationFrame(frame);
+    window.removeEventListener("resize", resize);
+    window.removeEventListener("pointermove", handlePointerMove);
+    window.removeEventListener("pointerleave", handlePointerLeave);
+  };
+
+  resize();
+  resetPointer();
+
+  window.addEventListener("resize", resize);
+  window.addEventListener("pointermove", handlePointerMove, { passive: true });
+  window.addEventListener("pointerleave", handlePointerLeave);
+
+  if (!mediaQuery.matches) {
+    frame = window.requestAnimationFrame(draw);
+  }
+
+  document.addEventListener("astro:before-swap", cleanup, { once: true });
+</script>

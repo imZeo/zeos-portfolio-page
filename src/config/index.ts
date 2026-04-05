@@ -1,8 +1,8 @@
 import type { SiteConfig, SiteContent } from "../types";
 
 export const SITE_CONFIG: SiteConfig = {
-  title: "Zoard Mano Csoltai (Zeo) | TechOps, Identity & Automation",
-  author: "Zoard Mano Csoltai",
+  title: "Zoárd Manó Csoltai | TechOps, Identity & Automation",
+  author: "Zoárd Manó Csoltai",
   description:
     "Senior TechOps Engineer in Copenhagen leading identity, access, fleet, and internal automation at scale.",
   lang: "en",
@@ -11,6 +11,7 @@ export const SITE_CONFIG: SiteConfig = {
     { text: "Experience", href: "#experience" },
     { text: "Work", href: "#projects" },
     { text: "Skills", href: "#about" },
+    { text: "Writing", href: "/writing" },
   ],
   socialLinks: [
     { text: "Email", href: "mailto:hello@zmcsoltai.com" },
@@ -23,7 +24,7 @@ export const SITE_CONFIG: SiteConfig = {
 
 export const SITE_CONTENT: SiteContent = {
   hero: {
-    name: "Zoard Mano Csoltai (Zeo)",
+    name: "Zoárd Manó Csoltai",
     specialty: "Internal Tech and Identity Engineering at Scale",
     summary:
       "Self-taught TechOps engineer leading identity and internal technology automation at a regulated fintech. I design and maintain compliant systems that reduce user friction across SSO, role-based access control, fleet management, and identity-driven automations.",
@@ -63,8 +64,8 @@ export const SITE_CONTENT: SiteContent = {
         "Designed group minting patterns that automatically fan out access to Slack, Google Workspace, and GitHub.",
         "Reduced access friction for employees while improving consistency and auditability for security stakeholders.",
       ],
-      linkSource:
-        "https://www.notion.so/How-Pleo-approaches-role-based-access-control-258988e2bb628024a879f044ddad773f?pvs=21",
+      linkSource: "/writing/pleo-rbac",
+      linkLabel: "Read Article",
     },
     {
       name: "GitHub Governance Through Identity Automation",
@@ -74,8 +75,8 @@ export const SITE_CONTENT: SiteContent = {
         "Removed recurring manual administration around team membership and repository ownership.",
         "Made engineering access governance more reliable by tying it directly to the source of truth for identity.",
       ],
-      linkSource:
-        "https://www.notion.so/Using-Okta-to-Automate-GitHub-Teams-925fef5ecb00444b85fc20827c12acc7?pvs=21",
+      linkSource: "/writing/okta-github-teams",
+      linkLabel: "Read Article",
     },
     {
       name: "Zero-Touch Onboarding and Fleet Migration",
@@ -91,10 +92,50 @@ export const SITE_CONTENT: SiteContent = {
     description:
       "I work at the intersection of internal tooling, identity, and practical operations. The through-line in my work is reducing friction without losing control: building systems that are easier for employees to use, easier for auditors to understand, and easier for teams to maintain.",
     principles: [
-      "Identity and Access: Okta, SSO (OIDC/SAML), SCIM, RBAC, Okta Workflows",
-      "Automation and IaC: Python, webhooks, REST APIs, Terraform (HCL), OpenTofu",
-      "SaaS and Tooling: Slack Enterprise Grid, Google Workspace, GitHub Enterprise, Greenhouse, NetSuite, Notion, Airtable",
-      "Operations and Practice: macOS fleet management, Jamf Pro, Kandji, OS update policy design, zero-touch people journey automations, plain-English documentation, ISO 27001 audit readiness",
+      {
+        title: "Identity and Access",
+        items: [
+          "Okta",
+          "SSO (OIDC/SAML)",
+          "SCIM",
+          "RBAC",
+          "Okta Workflows",
+        ],
+      },
+      {
+        title: "Automation and IaC",
+        items: [
+          "Python",
+          "Webhooks",
+          "REST APIs",
+          "Terraform (HCL)",
+          "OpenTofu",
+        ],
+      },
+      {
+        title: "SaaS and Tooling",
+        items: [
+          "Slack Enterprise Grid",
+          "Google Workspace",
+          "GitHub Enterprise",
+          "Greenhouse",
+          "NetSuite",
+          "Notion",
+          "Airtable",
+        ],
+      },
+      {
+        title: "Operations and Practice",
+        items: [
+          "macOS fleet management",
+          "Jamf Pro",
+          "Kandji",
+          "OS update policy design",
+          "Zero-touch people journey automations",
+          "Plain-English documentation",
+          "ISO 27001 audit readiness",
+        ],
+      },
     ],
   },
 };

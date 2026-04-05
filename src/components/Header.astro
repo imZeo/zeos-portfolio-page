@@ -6,50 +6,65 @@ import type { HeaderProps } from "@types";
 type Props = HeaderProps;
 
 const { siteLogo, navLinks } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
-<header
-  class="sticky top-0 z-50 mx-auto flex max-w-5xl animate-slide-in justify-between bg-black px-5 py-6"
->
-  <a href="/" aria-label="Home link">
-    <Image
-      class="rounded-full"
-      src={siteLogo}
-      width="45"
-      height="45"
-      alt="website logo"
-    />
-  </a>
+<header class="sticky top-0 z-50 animate-slide-in px-5 py-6">
+  <div class="mx-auto flex max-w-5xl justify-between rounded-2xl border border-white/6 bg-[#0e141b]/38 px-4 py-3 backdrop-blur-md">
+    <a href="/" aria-label="Home link">
+      <Image
+        class="rounded-full"
+        src={siteLogo}
+        width="45"
+        height="45"
+        alt="website logo"
+      />
+    </a>
 
-  <button
-    type="button"
-    id="menu-button"
-    class="px-1.5 text-neutral sm:hidden"
-    aria-expanded="false"
-    aria-controls="main-menu"
-  >
-    <Menu />
-  </button>
+    <button
+      type="button"
+      id="menu-button"
+      class="px-1.5 text-neutral sm:hidden"
+      aria-expanded="false"
+      aria-controls="main-menu"
+    >
+      <Menu />
+    </button>
 
-  <nav
-    class="absolute top-20 right-5 hidden rounded-xl border border-neutral/40 bg-black px-4 py-5 text-neutral sm:static sm:block sm:border-0 sm:bg-transparent sm:p-0"
-    id="main-menu"
-  >
-    <ul class="gap-2 sm:flex">
-      {
-        navLinks.map((link) => (
-          <li class="relative">
-            <a
-              class={`nav-item relative block p-2 text-sm font-medium transition-all duration-500 after:absolute after:bottom-0 after:left-2/4 after:h-2 after:w-1 after:-translate-x-2/4 after:text-primary after:opacity-0 after:content-['•'] hover:text-white`}
-              href={link.href}
-            >
-              {link.text}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
+    <nav
+      class="absolute top-22 right-5 hidden rounded-xl border border-white/10 bg-[#0e141b]/88 px-4 py-5 text-neutral shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:static sm:block sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-0"
+      id="main-menu"
+    >
+      <ul class="gap-2 sm:flex">
+        {
+          navLinks.map((link) => (
+            <li class="relative">
+              {
+                (() => {
+                  const isAnchor = link.href.startsWith("#");
+                  const isActive = isAnchor
+                    ? false
+                    : currentPath === link.href ||
+                      currentPath.startsWith(`${link.href}/`);
+
+                  return (
+                    <a
+                      class={`nav-item relative block p-2 text-sm font-medium transition-all duration-500 after:absolute after:bottom-0 after:left-2/4 after:h-2 after:w-1 after:-translate-x-2/4 after:text-primary after:content-['•'] hover:text-white ${
+                        isActive ? "text-white md:after:opacity-100" : "after:opacity-0"
+                      }`}
+                      href={link.href}
+                    >
+                      {link.text}
+                    </a>
+                  );
+                })()
+              }
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
 </header>
 
 <script>
@@ -57,6 +72,9 @@ const { siteLogo, navLinks } = Astro.props;
   const button = document.querySelector("#menu-button");
   const menu = document.querySelector("#main-menu");
   const navItems = document.querySelectorAll("#main-menu > ul > li > a");
+  const sectionNavItems = Array.from(navItems).filter((item) =>
+    item.getAttribute("href")?.startsWith("#"),
+  );
 
   const toggleMenu = () => {
     menu?.classList.toggle("hidden");
@@ -70,29 +88,36 @@ const { siteLogo, navLinks } = Astro.props;
   });
 
   // Update navigation based on scroll position with Intersection Observer
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          navItems.forEach((item) => {
-            if (item.getAttribute("href") === `#${entry.target.id}`) {
-              item.classList.add("text-white", "md:after:opacity-100");
-            } else {
-              item.classList.remove("text-white", "md:after:opacity-100");
-            }
-          });
-        }
-      });
-    },
-    { threshold: 0.5 },
-  );
+  const observer =
+    sectionNavItems.length > 0
+      ? new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                sectionNavItems.forEach((item) => {
+                  if (item.getAttribute("href") === `#${entry.target.id}`) {
+                    item.classList.add("text-white", "md:after:opacity-100");
+                  } else {
+                    item.classList.remove("text-white", "md:after:opacity-100");
+                  }
+                });
+              }
+            });
+          },
+          { threshold: 0.5 },
+        )
+      : null;
 
-  document.querySelectorAll("section").forEach((section) => {
-    observer.observe(section);
-  });
+  if (observer) {
+    document.querySelectorAll("section").forEach((section) => {
+      observer.observe(section);
+    });
+  }
 
   // Cleanup observer
   document.onvisibilitychange = () => {
+    if (!observer) return;
+
     if (document.visibilityState === "hidden") {
       observer.disconnect();
     } else {

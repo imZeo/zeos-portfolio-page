@@ -1,0 +1,76 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+
+const writing = (await getCollection("writing", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.published.valueOf() - a.data.published.valueOf(),
+);
+
+const navLinks = [
+  { text: "Home", href: "/" },
+  { text: "Writing", href: "/writing" },
+];
+---
+
+<Layout
+  title="Writing | Zoárd Manó Csoltai"
+  description="Technical writing, case studies, and notes from Zoárd Manó Csoltai."
+  navLinks={navLinks}
+  mainClass="relative z-10 mx-auto max-w-5xl px-5 lg:px-8"
+>
+  <section class="writing-shell py-16 md:py-24">
+    <div class="mb-16 max-w-3xl">
+      <p class="mb-4 text-sm font-medium tracking-[0.2em] text-primary uppercase">
+        Writing
+      </p>
+      <h1 class="mb-6 font-serif text-5xl font-bold tracking-tightest text-white md:text-7xl">
+        Notes, systems, and technical writeups.
+      </h1>
+      <p class="max-w-2xl text-lg leading-8 text-neutral">
+        A native home for longer-form case studies and technical writing, starting
+        with the systems work that used to live in Notion.
+      </p>
+    </div>
+
+    <div class="space-y-6">
+      {
+        writing.map((post) => (
+          <article class="rounded-3xl border border-white/8 bg-[#121a23]/80 p-6 backdrop-blur-sm md:p-8">
+            <div class="mb-5 flex flex-wrap items-center gap-3 text-sm text-neutral">
+              <time datetime={post.data.published.toISOString()}>
+                {post.data.published.toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </time>
+              {post.data.tags.map((tag) => (
+                <span class="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/70">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <h2 class="mb-3 font-serif text-3xl font-semibold text-white md:text-4xl">
+              <a class="hover:text-primary" href={`/writing/${post.slug}`}>
+                {post.data.title}
+              </a>
+            </h2>
+
+            <p class="mb-6 max-w-3xl text-base leading-8 text-neutral md:text-lg">
+              {post.data.description}
+            </p>
+
+            <a
+              class="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-white"
+              href={`/writing/${post.slug}`}
+            >
+              Read article
+              <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

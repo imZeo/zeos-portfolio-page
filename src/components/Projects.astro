@@ -12,7 +12,8 @@ const { projects } = Astro.props;
 <Section text="Selected Work" href="projects">
   <div class="space-y-6">
     {
-      projects.map(({ name, summary, details = [], linkPreview, linkSource }) => (
+      projects.map(
+        ({ name, summary, details = [], linkPreview, linkSource, linkLabel = "Read More" }) => (
         <article class="rounded-2xl border border-neutral/20 bg-[#121a23] p-6">
           <h3 class="mb-3 font-serif text-3xl font-medium text-primary">
             {name}
@@ -36,16 +37,16 @@ const { projects } = Astro.props;
               {linkSource && (
                 <a
                   href={linkSource}
-                  target="_blank"
+                  target={linkSource.startsWith("http") ? "_blank" : undefined}
                   class="after:relative after:bottom-[-5px] after:content-[url(/external.svg)] hover:underline"
                 >
-                  Read More
+                  {linkLabel}
                 </a>
               )}
               {linkPreview && (
                 <a
                   href={linkPreview}
-                  target="_blank"
+                  target={linkPreview.startsWith("http") ? "_blank" : undefined}
                   class="after:relative after:bottom-[-5px] after:content-[url(/external.svg)] hover:underline"
                 >
                   Preview
@@ -54,7 +55,8 @@ const { projects } = Astro.props;
             </div>
           )}
         </article>
-      ))
+      ),
+      )
     }
   </div>
 </Section>

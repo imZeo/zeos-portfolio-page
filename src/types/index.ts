@@ -36,11 +36,15 @@ export interface ProjectProps {
   details?: string[];
   linkPreview?: string;
   linkSource?: string;
+  linkLabel?: string;
 }
 
 export interface AboutProps {
   description: string;
-  principles?: string[];
+  principles?: {
+    title: string;
+    items: string[];
+  }[];
   image?: string;
 }
 

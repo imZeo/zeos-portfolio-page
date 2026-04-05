@@ -1,0 +1,70 @@
+---
+title: "Using Okta to Automate GitHub Teams"
+description: "A short writeup on using Okta-driven org data and GitHub's team sync APIs to automate team creation, linking, and cleanup."
+published: 2023-07-05
+tags:
+  - Okta
+  - RBAC
+  - Access Management
+  - GitHub
+featured: true
+draft: false
+---
+
+I am currently working on overhauling organisational structures to make them
+funky fresh and automated. One highly desired outcome is automated GitHub Teams
+membership, which DevOps previously handled semi-manually.
+
+The plan is always to use Okta and our HRIS tool, [Humaans](https://humaans.io/),
+to keep information 100% true to life.
+
+While an amazing work in progress at the time, Pleo's DevOps team had already
+applauded the plans. Attached is the video of how Cole, Head of DevOps,
+received the proposal.
+
+<video controls preload="metadata" class="article-media" src="/writing/okta-github-teams/Video_-_2023-06-29_11_06_02_AM.mp4">
+  Your browser does not support the video tag.
+</video>
+
+_1 December 2023: The project is complete and all teams are now created and
+updated based on Okta Workflows triggers._
+
+Luckily, the GitHub API made this a very simple three-part process:
+
+1. When a new team is created in Okta, a `POST` request is made to
+   `/orgs/{org}/teams` with elevated user permission.
+   1. We only passed the needed params, plus `parent_team_id`, to ensure new
+      teams nested into the automated group's parent team for easier discovery.
+2. A separate call connects the IdP group to the GitHub Team:
+   `PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings`
+   1. In the body, we send the team's info as a `groups` object:
+
+```json
+{
+  "groups": [
+    {
+      "group_id": "a334cv457xc",
+      "group_name": "team-funky-fresh-accounting",
+      "group_description": "The people who configure your octoworld."
+    }
+  ]
+}
+```
+
+3. If the team is disbanded, an archival step deletes the team through
+   `DELETE /orgs/{org}/teams/{team_slug}`.
+
+### A couple notes
+
+> GitHub currently supports per-user access tokens here, not a generic org-wide
+> API token.
+
+The workaround is to create bot users, but that is quite cumbersome because
+those service accounts also have to live in Okta so they can authenticate into
+the setup cleanly.
+
+We also used a personal token during early implementation. Once my admin rights
+were revoked, everything broke.
+
+A transition to service accounts was quickly set up and better error handling
+was implemented after that.
