@@ -24,43 +24,63 @@ const navLinks = [
   title={`${post.data.title} | Zoárd Manó Csoltai`}
   description={post.data.description}
   navLinks={navLinks}
-  mainClass="relative z-10 mx-auto max-w-4xl px-5 lg:px-8"
+  mainClass="relative z-10 mx-auto max-w-6xl px-5 pt-28 md:px-6 md:pt-32 lg:px-8 lg:pt-0 lg:pr-28"
 >
   <article class="writing-shell py-16 md:py-24">
-    <a
-      class="mb-10 inline-flex items-center gap-2 text-sm font-medium text-neutral hover:text-white"
-      href="/writing"
-    >
-      <span aria-hidden="true">←</span>
-      Back to writing
-    </a>
+    <div class="mb-12">
+      <a
+        class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#121a23]/70 px-4 py-2 text-sm font-medium text-neutral backdrop-blur-sm hover:text-white"
+        href="/writing"
+      >
+        <span aria-hidden="true">←</span>
+        Back to writing
+      </a>
+    </div>
 
-    <header class="mb-12 border-b border-white/8 pb-10">
-      <div class="mb-5 flex flex-wrap items-center gap-3 text-sm text-neutral">
-        <time datetime={post.data.published.toISOString()}>
-          {post.data.published.toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
-        </time>
-        {post.data.tags.map((tag) => (
-          <span class="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/70">
-            {tag}
-          </span>
-        ))}
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:gap-16">
+      <aside class="article-sidebar lg:sticky lg:top-28 lg:self-start">
+        <div class="rounded-3xl border border-white/8 bg-[#121a23]/72 p-5 backdrop-blur-sm">
+          <p class="mb-2 text-xs font-medium tracking-[0.18em] text-primary uppercase">
+            Published
+          </p>
+          <time class="mb-6 block text-sm leading-6 text-white/80" datetime={post.data.published.toISOString()}>
+            {post.data.published.toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </time>
+
+          <p class="mb-3 text-xs font-medium tracking-[0.18em] text-primary uppercase">
+            Topics
+          </p>
+          <div class="flex flex-wrap gap-2">
+            {post.data.tags.map((tag) => (
+              <span class="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-white/70">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </aside>
+
+      <div>
+        <header class="mb-12 border-b border-white/8 pb-10">
+          <p class="mb-4 text-sm font-medium tracking-[0.2em] text-primary uppercase">
+            Writing
+          </p>
+          <h1 class="mb-6 max-w-4xl font-serif text-5xl font-bold tracking-tightest text-white md:text-7xl">
+            {post.data.title}
+          </h1>
+          <p class="max-w-3xl text-lg leading-8 text-neutral md:text-xl">
+            {post.data.description}
+          </p>
+        </header>
+
+        <div class="article-prose article-prose--elevated max-w-3xl">
+          <Content />
+        </div>
       </div>
-
-      <h1 class="mb-6 font-serif text-5xl font-bold tracking-tightest text-white md:text-7xl">
-        {post.data.title}
-      </h1>
-      <p class="max-w-3xl text-lg leading-8 text-neutral md:text-xl">
-        {post.data.description}
-      </p>
-    </header>
-
-    <div class="article-prose">
-      <Content />
     </div>
   </article>
 </Layout>

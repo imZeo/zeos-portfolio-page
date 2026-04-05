@@ -1,32 +1,118 @@
 ---
 import type { HeroProps } from "@types";
+import { SITE_CONFIG } from "@config";
 type Props = HeroProps;
 
-const { name, specialty, summary, email } = Astro.props;
+const {
+  name,
+  specialty,
+  summary,
+  email,
+  secondaryLinks = [],
+  highlights = [],
+} = Astro.props;
 ---
 
 <section
-  class="py-24 md:flex md:min-h-[calc(100vh-9rem)] md:items-center md:py-8"
+  class="py-16 md:flex md:min-h-[calc(100vh-4.5rem)] md:items-center md:py-6"
   id="hero"
 >
-  <div class="max-w-lg">
-  <h1
-    class="mb-4 font-serif text-6xl font-bold tracking-tightest text-white sm:text-7xl md:text-[clamp(3.5rem,5vw,5.25rem)] md:leading-[0.92]"
-  >
-    {name}
-  </h1>
-  <p
-    class="mb-7 max-w-md font-serif text-3xl leading-[1.02] font-bold tracking-tighter text-primary sm:text-4xl md:text-[clamp(2rem,2.8vw,3rem)]"
-  >
-    {specialty}
-  </p>
-  <p class="mb-12 max-w-md text-base font-normal text-neutral md:text-lg md:leading-8">
-    {summary}
-  </p>
+  <div class="max-w-xl">
+    <div class="mb-10">
+      <div class="hero-mark">
+        <div class="hero-mark__halo"></div>
+        <div class="hero-mark__frame">
+          <img
+            class="hero-mark__image"
+            src={SITE_CONFIG.siteLogo}
+            alt={`${name} logo`}
+            loading="eager"
+          />
+        </div>
+      </div>
+    </div>
 
-  <a
-    class="inline-block rounded-full bg-primary px-8 py-4 text-sm leading-5 font-medium text-[#fff]"
-    href={`mailto:${email}`}>Get in Touch</a
-  >
+    <h1
+      class="mb-4 max-w-lg font-serif text-5xl font-bold tracking-tightest text-white sm:text-6xl md:text-[clamp(3rem,4vw,4.5rem)] md:leading-[0.94]"
+    >
+      {name}
+    </h1>
+
+    <p
+      class="mb-6 max-w-md font-serif text-2xl leading-[1.02] font-bold tracking-tighter text-primary sm:text-3xl md:text-[clamp(1.75rem,2.3vw,2.65rem)]"
+    >
+      {specialty}
+    </p>
+
+    <p class="mb-9 max-w-md text-[1rem] font-normal leading-8 text-neutral md:text-[1.05rem]">
+      {summary}
+    </p>
+
+    <div class="mb-10 flex flex-wrap items-center gap-3">
+      <a
+        class="cta-button cta-button--primary inline-block rounded-full px-7 py-3.5 text-sm leading-5 font-medium text-[#fff]"
+        data-cta-button
+        href={`mailto:${email}`}>Get in Touch</a
+      >
+
+      {
+        secondaryLinks.map((link) => (
+          <a
+            class="cta-button cta-button--secondary inline-flex items-center rounded-full px-5 py-3 text-sm font-medium text-white/80"
+            data-cta-button
+            href={link.href}
+            target={link.href.startsWith("http") ? "_blank" : undefined}
+          >
+            {link.text}
+          </a>
+        ))
+      }
+    </div>
+
+    {
+      highlights.length > 0 && (
+        <div class="flex flex-wrap gap-2.5">
+          {highlights.map((highlight) => (
+            <span class="rounded-full border border-white/10 bg-[#121a23]/72 px-3.5 py-2 text-[11px] font-medium tracking-[0.16em] text-white/70 uppercase backdrop-blur-sm">
+              {highlight}
+            </span>
+          ))}
+        </div>
+      )
+    }
   </div>
 </section>
+
+<script>
+  const ctaButtons = document.querySelectorAll("[data-cta-button]");
+
+  ctaButtons.forEach((button) => {
+    if (!(button instanceof HTMLElement)) return;
+
+    const handleMove = (event: PointerEvent) => {
+      const rect = button.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      button.style.setProperty("--cta-x", `${x}px`);
+      button.style.setProperty("--cta-y", `${y}px`);
+    };
+
+    const handleLeave = () => {
+      button.style.removeProperty("--cta-x");
+      button.style.removeProperty("--cta-y");
+    };
+
+    button.addEventListener("pointermove", handleMove);
+    button.addEventListener("pointerleave", handleLeave);
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        button.removeEventListener("pointermove", handleMove);
+        button.removeEventListener("pointerleave", handleLeave);
+      },
+      { once: true },
+    );
+  });
+</script>

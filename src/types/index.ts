@@ -17,9 +17,12 @@ export interface SiteContent {
 
 export interface HeroProps {
   name: string;
+  eyebrow?: string;
   specialty: string;
   summary: string;
   email: string;
+  secondaryLinks?: { text: string; href: string }[];
+  highlights?: string[];
 }
 
 export interface ExperienceProps {

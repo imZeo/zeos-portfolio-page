@@ -6,7 +6,7 @@ export const SITE_CONFIG: SiteConfig = {
   description:
     "Senior TechOps Engineer in Copenhagen leading identity, access, fleet, and internal automation at scale.",
   lang: "en",
-  siteLogo: "/favicon.svg",
+  siteLogo: "/zeo-logo.png",
   navLinks: [
     { text: "Experience", href: "#experience" },
     { text: "Work", href: "#projects" },
@@ -16,9 +16,8 @@ export const SITE_CONFIG: SiteConfig = {
   socialLinks: [
     { text: "Email", href: "mailto:hello@zmcsoltai.com" },
     { text: "LinkedIn", href: "https://www.linkedin.com/in/zmcsoltai/" },
-    { text: "Website", href: "https://zmcsoltai.com" },
   ],
-  socialImage: "/favicon.svg",
+  socialImage: "/zeo-logo.png",
   canonicalURL: "https://zmcsoltai.com",
 };
 
@@ -29,6 +28,15 @@ export const SITE_CONTENT: SiteContent = {
     summary:
       "Self-taught TechOps engineer leading identity and internal technology automation at a regulated fintech. I design and maintain compliant systems that reduce user friction across SSO, role-based access control, fleet management, and identity-driven automations.",
     email: "hello@zmcsoltai.com",
+    secondaryLinks: [
+      { text: "LinkedIn", href: "https://www.linkedin.com/in/zmcsoltai/" },
+    ],
+    highlights: [
+      "Identity Management",
+      "MDM",
+      "ISO 27001",
+      "JML Processes",
+    ],
   },
   experience: [
     {

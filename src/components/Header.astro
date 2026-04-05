@@ -1,30 +1,27 @@
 ---
 import Menu from "@icons/Menu.astro";
-import { Image } from "astro:assets";
 import type { HeaderProps } from "@types";
 
 type Props = HeaderProps;
 
-const { siteLogo, navLinks } = Astro.props;
+const { navLinks } = Astro.props;
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 animate-slide-in px-5 py-6">
-  <div class="mx-auto flex max-w-5xl justify-between rounded-2xl border border-white/6 bg-[#0e141b]/38 px-4 py-3 backdrop-blur-md">
-    <a href="/" aria-label="Home link">
-      <Image
-        class="rounded-full"
-        src={siteLogo}
-        width="45"
-        height="45"
-        alt="website logo"
-      />
+<header class="pointer-events-none fixed inset-x-0 top-0 z-50 animate-slide-in px-4 py-4 lg:inset-auto lg:top-1/2 lg:right-6 lg:px-0 lg:py-0">
+  <div class="pointer-events-auto mx-auto flex max-w-6xl items-center justify-between rounded-[1.6rem] border border-white/8 bg-[#0e141b]/72 px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.22)] backdrop-blur-xl lg:mx-0 lg:w-auto lg:flex-col lg:justify-start lg:rounded-[2rem] lg:px-3 lg:py-3">
+    <a
+      href="/"
+      class="text-sm font-semibold tracking-[0.24em] text-white/70 uppercase lg:hidden"
+      aria-label="Home link"
+    >
+      Menu
     </a>
 
     <button
       type="button"
       id="menu-button"
-      class="px-1.5 text-neutral sm:hidden"
+      class="px-1.5 text-neutral lg:hidden"
       aria-expanded="false"
       aria-controls="main-menu"
     >
@@ -32,10 +29,10 @@ const currentPath = Astro.url.pathname;
     </button>
 
     <nav
-      class="absolute top-22 right-5 hidden rounded-xl border border-white/10 bg-[#0e141b]/88 px-4 py-5 text-neutral shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:static sm:block sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-0"
+      class="absolute top-[calc(100%+0.85rem)] left-0 right-0 hidden rounded-[1.4rem] border border-white/10 bg-[#0e141b]/92 px-3 py-3 text-neutral shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl lg:static lg:block lg:w-auto lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-0"
       id="main-menu"
     >
-      <ul class="gap-2 sm:flex">
+      <ul class="grid gap-1 lg:gap-2">
         {
           navLinks.map((link) => (
             <li class="relative">
@@ -49,8 +46,10 @@ const currentPath = Astro.url.pathname;
 
                   return (
                     <a
-                      class={`nav-item relative block p-2 text-sm font-medium transition-all duration-500 after:absolute after:bottom-0 after:left-2/4 after:h-2 after:w-1 after:-translate-x-2/4 after:text-primary after:content-['•'] hover:text-white ${
-                        isActive ? "text-white md:after:opacity-100" : "after:opacity-0"
+                      class={`nav-item block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300 hover:text-white lg:min-w-[7.25rem] lg:px-3 lg:text-center ${
+                        isActive
+                          ? "is-active bg-white/8 text-white ring-1 ring-white/10"
+                          : "text-white/68"
                       }`}
                       href={link.href}
                     >
@@ -84,7 +83,9 @@ const currentPath = Astro.url.pathname;
 
   button?.addEventListener("click", toggleMenu);
   navItems.forEach((item) => {
-    item?.addEventListener("click", toggleMenu);
+    item?.addEventListener("click", () => {
+      if (window.innerWidth < 1024) toggleMenu();
+    });
   });
 
   // Update navigation based on scroll position with Intersection Observer
@@ -96,9 +97,9 @@ const currentPath = Astro.url.pathname;
               if (entry.isIntersecting) {
                 sectionNavItems.forEach((item) => {
                   if (item.getAttribute("href") === `#${entry.target.id}`) {
-                    item.classList.add("text-white", "md:after:opacity-100");
+                    item.classList.add("is-active", "bg-white/8", "text-white", "ring-1", "ring-white/10");
                   } else {
-                    item.classList.remove("text-white", "md:after:opacity-100");
+                    item.classList.remove("is-active", "bg-white/8", "text-white", "ring-1", "ring-white/10");
                   }
                 });
               }
@@ -132,5 +133,12 @@ const currentPath = Astro.url.pathname;
   header {
     animation-timeline: scroll();
     animation-range: 0 650px;
+  }
+
+  @media (min-width: 1024px) {
+    header {
+      animation-timeline: auto;
+      animation-range: normal;
+    }
   }
 </style>

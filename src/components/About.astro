@@ -14,7 +14,7 @@ const { description, principles = [] } = Astro.props;
     <div class="space-y-4">
       {
         principles.map(({ title, items }) => (
-          <details class="group rounded-2xl border border-neutral/20 bg-[#121a23] px-5 py-4">
+          <details class="skill-accordion group rounded-2xl border border-neutral/20 bg-[#121a23] px-5 py-4">
             <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-left font-serif text-2xl font-medium text-white marker:hidden">
               <span>{title}</span>
               <span class="text-primary transition-transform duration-200 group-open:rotate-45">
@@ -22,15 +22,17 @@ const { description, principles = [] } = Astro.props;
               </span>
             </summary>
 
-            <ul class="mt-5 list-none border-t border-neutral/20 pt-5">
-              {
-                items.map((item) => (
-                  <li class="relative mb-3 pl-8 text-base text-neutral before:absolute before:top-1 before:left-0 before:content-[url(/check.svg)] last:mb-0">
-                    {item}
-                  </li>
-                ))
-              }
-            </ul>
+            <div class="skill-accordion__content">
+              <ul class="mt-5 list-none border-t border-neutral/20 pt-5">
+                {
+                  items.map((item) => (
+                    <li class="relative mb-3 pl-8 text-base text-neutral before:absolute before:top-1 before:left-0 before:content-[url(/check.svg)] last:mb-0">
+                      {item}
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
           </details>
         ))
       }
