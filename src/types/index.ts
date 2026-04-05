@@ -33,14 +33,15 @@ export interface ExperienceProps {
 export interface ProjectProps {
   name: string;
   summary: string;
-  image: string;
+  details?: string[];
   linkPreview?: string;
   linkSource?: string;
 }
 
 export interface AboutProps {
   description: string;
-  image: string;
+  principles?: string[];
+  image?: string;
 }
 
 export interface HeaderProps {

@@ -1,98 +1,100 @@
 import type { SiteConfig, SiteContent } from "../types";
 
 export const SITE_CONFIG: SiteConfig = {
-  title: "Alejandro Múnez — Mobile & Web Developer",
-  author: "Alejandro Múnez Cuntez",
+  title: "Zoard Mano Csoltai (Zeo) | TechOps, Identity & Automation",
+  author: "Zoard Mano Csoltai",
   description:
-    "Software Engineer based in San Francisco, USA. I specialize in UI design, web and mobile application development and maintenance.",
+    "Senior TechOps Engineer in Copenhagen leading identity, access, fleet, and internal automation at scale.",
   lang: "en",
-  siteLogo: "/alejandro-small.jpg",
+  siteLogo: "/favicon.svg",
   navLinks: [
     { text: "Experience", href: "#experience" },
-    { text: "Projects", href: "#projects" },
-    { text: "About", href: "#about" },
+    { text: "Work", href: "#projects" },
+    { text: "Skills", href: "#about" },
   ],
   socialLinks: [
-    { text: "Twitter", href: "https://github.com/immois/astro-zen" },
-    { text: "LinkedIn", href: "https://github.com/immois/astro-zen" },
-    { text: "Github", href: "https://github.com/immois/astro-zen" },
-    { text: "Youtube", href: "https://github.com/immois/astro-zen" },
-    { text: "Dribbble", href: "https://github.com/immois/astro-zen" },
+    { text: "Email", href: "mailto:hello@zmcsoltai.com" },
+    { text: "LinkedIn", href: "https://www.linkedin.com/in/zmcsoltai/" },
+    { text: "Website", href: "https://zmcsoltai.com" },
   ],
-  socialImage: "/zen-og.png",
-  canonicalURL: "https://astro-zen.vercel.app",
+  socialImage: "/favicon.svg",
+  canonicalURL: "https://zmcsoltai.com",
 };
 
 export const SITE_CONTENT: SiteContent = {
   hero: {
-    name: "Alejandro Múnez",
-    specialty: "Mobile & Web Developer",
+    name: "Zoard Mano Csoltai (Zeo)",
+    specialty: "Internal Tech and Identity Engineering at Scale",
     summary:
-      "Developer based in San Francisco, USA. I specialize in UI design, web and mobile application development and maintenance.",
-    email: "example@email.com",
+      "Self-taught TechOps engineer leading identity and internal technology automation at a regulated fintech. I design and maintain compliant systems that reduce user friction across SSO, role-based access control, fleet management, and identity-driven automations.",
+    email: "hello@zmcsoltai.com",
   },
   experience: [
     {
-      company: "Zalmart",
-      position: "Lead Android Developer",
-      startDate: "May 2018",
-      endDate: "Sept 2020",
+      company: "Pleo",
+      position: "Senior TechOps Engineer",
+      startDate: "Aug 2021",
+      endDate: "Present",
       summary: [
-        "Implemented advanced memory management and code optimization techniques, resulting in a reduction in application load time by 40% and a decrease in crashes by 25%. This significantly improved user experience and increased user retention by 20%.",
-        "I led a team of developers in building and integrating new features using Jetpack Android components such as LiveData and ViewModel. This enabled us to build scalable and maintainable applications, reducing the crash rate by 20% and speeding up the time to delivery of new features by 15%.",
-        "Integrated Google Pay for in-app purchases, resulting in a 35% increase in mobile transaction revenue. Additionally, implemented Firebase Analytics to gain insights into user behavior, enabling data-driven optimizations and a 30% increase in user retention.",
+        "Own identity, access, fleet, and automation for 1,000+ users in a product-led fintech, partnering closely with People, SRE, DevX, and People Tech.",
+        "Led company-wide authentication and SSO rollout, using convention-based Okta group minting to push access into Slack, Google, and GitHub automatically.",
+        "Migrated a 1,000+ macOS fleet from Jamf to Kandji, reducing manual upkeep by roughly 40% while aligning device posture with zero-trust and ISO 27001 requirements.",
+        "Built zero-touch onboarding automations that provision accounts and devices so new joiners are productive on day one with minimal IT intervention.",
+        "Represented TechOps during ISO 27001 audit work, walking auditors through lifecycle controls and evidence that supported Pleo's first certification.",
       ],
     },
     {
-      company: "Bankit",
-      position: "Mobile Developer",
-      startDate: "Feb 2017",
-      endDate: "May 2018",
+      company: "The Olive Kitchen & Bar",
+      position: "Restaurant Manager",
+      startDate: "2017",
+      endDate: "2021",
       summary: [
-        "I designed and developed a mobile application using Flutter, allowing it to be deployed on both Android and iOS with a single codebase. This reduced development time by 50% and maintenance costs by 30%, facilitating a consistent user experience on both platforms.",
-        "I integrated biometric authentication and data encryption, significantly improving the security of user data. This implementation resulted in a 40% increase in user trust and a 25% reduction in unauthorized access attempts.",
+        "Managed a 20-person team and ran daily operations with a strong focus on service quality, coordination, and accountability.",
+        "Built the operational judgment and people skills that still shape how I lead cross-functional technical work today.",
       ],
-    },
-    {
-      company: "Driveer",
-      position: "Frontend Developer",
-      startDate: "Jun 2015",
-      endDate: "Oct 2016",
-      summary:
-        "Developed and integrated a real-time vehicle tracking system using WebSockets, improving accuracy and data update in the application. This functionality increased user satisfaction by 30% and reduced customer service inquiries by 25%.",
     },
   ],
   projects: [
     {
-      name: "Spotifu Music",
-      summary: "A music streaming app that emulates Spotify's core features.",
-      linkPreview: "/",
-      linkSource: "https://github.com/immois/astro-zen",
-      image: "/spotifu.png",
+      name: "Role-Based Access Control at Pleo",
+      summary:
+        "Built a convention-driven RBAC model in Okta so access follows organization structure instead of manual ticket work.",
+      details: [
+        "Designed group minting patterns that automatically fan out access to Slack, Google Workspace, and GitHub.",
+        "Reduced access friction for employees while improving consistency and auditability for security stakeholders.",
+      ],
+      linkSource:
+        "https://www.notion.so/How-Pleo-approaches-role-based-access-control-258988e2bb628024a879f044ddad773f?pvs=21",
     },
     {
-      name: "Shopp App",
-      summary: "An e-commerce platform that replicates Shopify's key features.",
-      linkPreview: "/",
-      linkSource: "https://github.com/immois/astro-zen",
-      image: "/shopify-clon.png",
+      name: "GitHub Governance Through Identity Automation",
+      summary:
+        "Synced directory groups into GitHub teams, reviewer pools, and CODEOWNERS so permissions stay aligned with the actual org.",
+      details: [
+        "Removed recurring manual administration around team membership and repository ownership.",
+        "Made engineering access governance more reliable by tying it directly to the source of truth for identity.",
+      ],
+      linkSource:
+        "https://www.notion.so/Using-Okta-to-Automate-GitHub-Teams-925fef5ecb00444b85fc20827c12acc7?pvs=21",
     },
     {
-      name: "ClonTagram",
-      summary: "A social network that replicates the features of Instagram",
-      linkPreview: "/",
-      linkSource: "https://github.com/immois/astro-zen",
-      image: "/clone-ig.png",
+      name: "Zero-Touch Onboarding and Fleet Migration",
+      summary:
+        "Connected onboarding automation, device provisioning, and policy design into a tighter internal platform experience.",
+      details: [
+        "Created a day-one-ready onboarding flow where automations handle account provisioning and most device setup steps.",
+        "Paired a large Jamf-to-Kandji migration with safer defaults and staged OS update policies tied to zero-trust controls.",
+      ],
     },
   ],
   about: {
-    description: `
-      Hi, I’m Alejandro Múnez, a passionate Mobile and Web Developer with a knack for crafting seamless digital experiences. With a strong background in both Android and iOS development, as well as front-end web technologies, I thrive in the intersection where creativity meets technology.
-
-      Over the years, I’ve honed my skills in building robust, user-friendly applications that not only meet the needs of users but also push the boundaries of what’s possible. My projects range from innovative mobile applications to responsive web designs, all with a focus on performance, security, and scalability.
-    `,
-    image: "/alejandro-big.jpg",
+    description:
+      "I work at the intersection of internal tooling, identity, and practical operations. The through-line in my work is reducing friction without losing control: building systems that are easier for employees to use, easier for auditors to understand, and easier for teams to maintain.",
+    principles: [
+      "Identity and Access: Okta, SSO (OIDC/SAML), SCIM, RBAC, Okta Workflows",
+      "Automation and IaC: Python, webhooks, REST APIs, Terraform (HCL), OpenTofu",
+      "SaaS and Tooling: Slack Enterprise Grid, Google Workspace, GitHub Enterprise, Greenhouse, NetSuite, Notion, Airtable",
+      "Operations and Practice: macOS fleet management, Jamf Pro, Kandji, OS update policy design, zero-touch people journey automations, plain-English documentation, ISO 27001 audit readiness",
+    ],
   },
 };
-
-// #5755ff
