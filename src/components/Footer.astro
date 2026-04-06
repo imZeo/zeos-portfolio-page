@@ -17,8 +17,39 @@ const currentYear = new Date().getFullYear();
           <a
             href={href}
             target="_blank"
-            class="inline-block px-4 py-3 after:relative after:bottom-[-4px] after:content-[url(/external.svg)] hover:text-primary"
+            class="inline-flex items-center gap-2 px-4 py-3 hover:text-primary"
           >
+            {
+              text === "Email" && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4"
+                  aria-hidden="true"
+                >
+                  <path d="M4 6h16v12H4z"></path>
+                  <path d="m4 7 8 6 8-6"></path>
+                </svg>
+              )
+            }
+            {
+              text === "LinkedIn" && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="h-4 w-4"
+                  aria-hidden="true"
+                >
+                  <path d="M6.94 8.5H3.56V20h3.38V8.5Zm.22-3.56c0-1.02-.77-1.84-1.92-1.84-1.15 0-1.9.82-1.9 1.84 0 1 .73 1.84 1.86 1.84h.02c1.17 0 1.94-.84 1.94-1.84ZM20.44 13.02c0-3.48-1.86-5.1-4.34-5.1-2 0-2.9 1.1-3.4 1.88V8.5H9.33c.04.86 0 11.5 0 11.5h3.37v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.38 1.9-1.38 1.34 0 1.88 1.02 1.88 2.52V20H20v-6.98Z" />
+                </svg>
+              )
+            }
             {text}
           </a>
         </li>

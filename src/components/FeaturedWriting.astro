@@ -22,10 +22,10 @@ const { posts } = Astro.props;
       <p class="mb-3 text-sm font-medium tracking-[0.2em] text-primary uppercase">
         Writing
       </p>
-      <h2 class="font-serif text-4xl font-bold tracking-tighter text-white md:text-5xl">
+      <h2 class="font-serif text-[2.35rem] font-bold tracking-tighter text-white md:text-[3rem]">
         Featured writing
       </h2>
-      <p class="mt-4 text-base leading-8 text-neutral md:text-lg">
+      <p class="mt-4 max-w-xl text-[0.98rem] leading-8 text-neutral md:text-[1.05rem]">
         Case studies and systems notes published directly on the site, so the
         best work is readable without bouncing out to external tools.
       </p>
@@ -39,40 +39,42 @@ const { posts } = Astro.props;
   <div class="grid gap-5">
     {
       posts.map((post) => (
-        <article class="rounded-3xl border border-white/8 bg-[#121a23]/78 p-6 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1 md:p-8">
-          <div class="mb-4 flex flex-wrap items-center gap-3 text-sm text-neutral">
-            <time datetime={post.data.published.toISOString()}>
-              {post.data.published.toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </time>
-            {post.data.tags.slice(0, 3).map((tag) => (
-              <span class="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-white/70">
-                {tag}
-              </span>
-            ))}
-          </div>
+        <div class="card-glow" data-card-glow>
+          <article class="surface-panel p-5 md:p-6">
+            <div class="mb-3 flex flex-wrap items-center gap-2.5 text-[0.92rem] text-neutral">
+              <time datetime={post.data.published.toISOString()}>
+                {post.data.published.toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </time>
+              {post.data.tags.slice(0, 3).map((tag) => (
+                <span class="rounded-full border border-white/10 px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-white/70">
+                  {tag}
+                </span>
+              ))}
+            </div>
 
-          <h3 class="mb-3 font-serif text-3xl font-semibold text-white md:text-4xl">
-            <a class="hover:text-primary" href={`/writing/${post.slug}`}>
-              {post.data.title}
+            <h3 class="mb-3 max-w-[16ch] font-serif text-[2.1rem] font-semibold leading-[1.02] text-white md:text-[2.45rem]">
+              <a class="hover:text-primary" href={`/writing/${post.slug}`}>
+                {post.data.title}
+              </a>
+            </h3>
+
+            <p class="mb-5 max-w-2xl text-[0.98rem] leading-7 text-neutral md:text-[1.02rem]">
+              {post.data.description}
+            </p>
+
+            <a
+              class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/4 px-4 py-2 text-[0.92rem] font-medium text-primary hover:border-white/20 hover:text-white"
+              href={`/writing/${post.slug}`}
+            >
+              Read article
+              <span aria-hidden="true">→</span>
             </a>
-          </h3>
-
-          <p class="mb-6 max-w-3xl text-base leading-8 text-neutral md:text-lg">
-            {post.data.description}
-          </p>
-
-          <a
-            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/4 px-4 py-2 text-sm font-medium text-primary hover:border-white/20 hover:text-white"
-            href={`/writing/${post.slug}`}
-          >
-            Read article
-            <span aria-hidden="true">→</span>
-          </a>
-        </article>
+          </article>
+        </div>
       ))
     }
   </div>
@@ -81,3 +83,37 @@ const { posts } = Astro.props;
     See all writing
   </a>
 </section>
+
+<script>
+  const writingCards = document.querySelectorAll("[data-card-glow]");
+
+  writingCards.forEach((card) => {
+    if (!(card instanceof HTMLElement)) return;
+
+    const handleMove = (event: PointerEvent) => {
+      const rect = card.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      card.style.setProperty("--card-glow-x", `${x}px`);
+      card.style.setProperty("--card-glow-y", `${y}px`);
+      card.style.setProperty("--card-glow-opacity", "1");
+    };
+
+    const handleLeave = () => {
+      card.style.setProperty("--card-glow-opacity", "0");
+    };
+
+    card.addEventListener("pointermove", handleMove);
+    card.addEventListener("pointerleave", handleLeave);
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        card.removeEventListener("pointermove", handleMove);
+        card.removeEventListener("pointerleave", handleLeave);
+      },
+      { once: true },
+    );
+  });
+</script>
