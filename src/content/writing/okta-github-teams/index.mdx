@@ -31,15 +31,20 @@ received the proposal.
 _1 December 2023: The project is complete and all teams are now created and
 updated based on Okta Workflows triggers._
 
+## The process
+
 Luckily, the GitHub API made this a very simple three-part process:
 
 1. When a new team is created in Okta, a `POST` request is made to
    `/orgs/{org}/teams` with elevated user permission.
-   1. We only passed the needed params, plus `parent_team_id`, to ensure new
-      teams nested into the automated group's parent team for easier discovery.
+
+We only passed the needed params, plus `parent_team_id`, to ensure new teams
+nested into the automated group's parent team for easier discovery.
+
 2. A separate call connects the IdP group to the GitHub Team:
    `PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings`
-   1. In the body, we send the team's info as a `groups` object:
+
+In the body, we send the team's info as a `groups` object:
 
 ```json
 {
@@ -56,7 +61,7 @@ Luckily, the GitHub API made this a very simple three-part process:
 3. If the team is disbanded, an archival step deletes the team through
    `DELETE /orgs/{org}/teams/{team_slug}`.
 
-### A couple notes
+## A couple notes
 
 > GitHub currently supports per-user access tokens here, not a generic org-wide
 > API token.
