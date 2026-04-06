@@ -1,0 +1,833 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+const navLinks = [
+  { text: "Home", href: "/" },
+  { text: "Writing", href: "/writing" },
+];
+
+const sectionLinks = [
+  {
+    label: "See",
+    href: "#see",
+    icon: "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Zm0 12.25A4.75 4.75 0 1 1 12 7.25a4.75 4.75 0 0 1 0 9.5Zm0-2A2.75 2.75 0 1 0 12 9.25a2.75 2.75 0 0 0 0 5.5Z",
+  },
+  {
+    label: "Must-dos",
+    href: "#must-dos",
+    icon: "M12 2.75 14.85 8.53l6.38.93-4.61 4.49 1.09 6.35L12 17.3l-5.71 3 1.09-6.35-4.61-4.49 6.38-.93L12 2.75Z",
+  },
+  {
+    label: "Eat",
+    href: "#eat",
+    icon: "M7.5 3.5v7.25a2.75 2.75 0 0 1-2.75 2.75V20a1 1 0 1 1-2 0v-6.5A2.75 2.75 0 0 1 0 10.75V3.5a1 1 0 1 1 2 0v4h1.5v-4a1 1 0 1 1 2 0v4H7v-4a1 1 0 1 1 2 0Zm8.75 0c2.07 0 3.75 1.91 3.75 4.25 0 1.71-.9 3.18-2.19 3.86V20a1 1 0 1 1-2 0V11.61c-1.29-.68-2.18-2.15-2.18-3.86 0-2.34 1.67-4.25 3.74-4.25h.88Z",
+  },
+  {
+    label: "Party",
+    href: "#party",
+    icon: "M13.5 2.75a1 1 0 0 1 1 1V6h3.75a1 1 0 0 1 .7 1.71l-4.45 4.46V20a1 1 0 1 1-2 0v-7.83L8.05 7.7A1 1 0 0 1 8.75 6H12V3.75a1 1 0 0 1 1-1h.5Z",
+  },
+  {
+    label: "Coffee",
+    href: "#coffee",
+    icon: "M4 5.5h11a1 1 0 0 1 1 1V8h1.5A3.5 3.5 0 0 1 21 11.5v.25A3.25 3.25 0 0 1 17.75 15H17a5 5 0 0 1-5 4H8A5 5 0 0 1 3 14V6.5a1 1 0 0 1 1-1Zm12 7.5h1.75A1.25 1.25 0 0 0 19 11.75v-.25A1.5 1.5 0 0 0 17.5 10H16v3Zm-8.5 7.75a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2h-6Z",
+  },
+  {
+    label: "Work",
+    href: "#work",
+    icon: "M8 4.5V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v.5h3A2.5 2.5 0 0 1 21.5 7v8A2.5 2.5 0 0 1 19 17.5H5A2.5 2.5 0 0 1 2.5 15V7A2.5 2.5 0 0 1 5 4.5h3Zm2-.5h4V4h-4v0Zm9.5 6.25H14v1a1 1 0 1 1-2 0v-1h-1v1a1 1 0 1 1-2 0v-1H4.5V15c0 .28.22.5.5.5h14a.5.5 0 0 0 .5-.5v-4.75Z",
+  },
+  {
+    label: "Links",
+    href: "#links",
+    icon: "M10.59 13.41a1 1 0 0 1 0-1.41l3.17-3.17a2.75 2.75 0 1 1 3.89 3.89l-2.47 2.47a2.75 2.75 0 0 1-3.89 0 1 1 0 1 1 1.41-1.41.75.75 0 0 0 1.07 0l2.47-2.47a.75.75 0 0 0-1.06-1.06L12 13.41a1 1 0 0 1-1.41 0Zm2.82-2.82a1 1 0 0 1 0 1.41l-3.17 3.17a2.75 2.75 0 0 1-3.89-3.89l2.47-2.47a2.75 2.75 0 0 1 3.89 0 1 1 0 0 1-1.41 1.41.75.75 0 0 0-1.07 0l-2.47 2.47a.75.75 0 1 0 1.06 1.06L12 10.59a1 1 0 0 1 1.41 0Z",
+  },
+];
+
+const sightseeing = [
+  {
+    name: "Citadella and Liberty Statue",
+    description:
+      "On top of Gellert Hill. Proper climb, but the view is fantastic. The Liberty Statue was closed for renovations when this guide was last updated.",
+  },
+  {
+    name: "Philosophers' Garden",
+    description:
+      "A favourite hangout spot in Budapest, fairly close to the Citadella.",
+  },
+  {
+    name: "Buda Castle, Matthias Church, and Fisherman's Bastion",
+    description:
+      "All in one area, properly beautiful, touristy, and still worth it. The views back over Pest are the real payoff.",
+  },
+  {
+    name: "Heroes' Square",
+    description:
+      "A definite stop. Walk through Varosliget, the City Park, while you are there.",
+  },
+  {
+    name: "Main Market Hall",
+    description:
+      "Fresh produce, meats, fish, and general market chaos. The sort of place that makes lesser cities feel under-equipped.",
+  },
+  {
+    name: "Chain Bridge",
+    description: "Freshly reopened and renovated at the time of writing.",
+  },
+];
+
+const mustDos = [
+  {
+    name: "360 Bar",
+    description: "Rooftop cocktails with excellent city views.",
+  },
+  {
+    name: "Baths",
+    description:
+      "Rudas Furdo is the favourite, while Szechenyi is the obvious popular pick. Skip Gellert if you care about value. Bonus points if you catch the outdoor hot tub at Rudas after dark.",
+  },
+  {
+    name: "Ice skating at Varosliget",
+    description: "Seasonal, but excellent when it is on.",
+  },
+];
+
+const casualFood = [
+  {
+    name: "Arriba Taqueria",
+    description:
+      "Tex-mex, good burritos, frozen margaritas. Personal bias applies because this used to be a workplace.",
+  },
+  {
+    name: "Iguana Bar & Grill",
+    description:
+      "Arriba's older sibling. Slightly fancier tex-mex, generous portions, and well priced.",
+  },
+  {
+    name: "Enso",
+    description: "Very cool Asian restaurant. Strong recommendation.",
+  },
+  {
+    name: "Buja Diszno",
+    description:
+      "Michelin-quality schnitzel in Buda near Mammut shopping mall.",
+  },
+  {
+    name: "Pekmuhely",
+    description: "The bakery pick.",
+  },
+  {
+    name: "Bors GasztroBar",
+    description:
+      "Soup in a cup and stuffed baguettes. Budget friendly and absurdly satisfying.",
+  },
+  {
+    name: "Cserpes Tejivo",
+    description:
+      "Milk bar breakfast stop. Try the Turo Rudi and the rongyos kifli.",
+  },
+  {
+    name: "Tuning Burger",
+    description: "Best burgers in Budapest, according to this list.",
+  },
+  {
+    name: "Bamba Marha",
+    description:
+      "A very solid Hungarian-owned burger chain with distinctive flavours and good value.",
+  },
+  {
+    name: "Terv Presszo",
+    description:
+      "An institution dating back to the 1960s. Cozy, Hungarian, and not a tourist trap. Good call if you want gulyas.",
+  },
+  {
+    name: "Caphe by Hai Nam",
+    description: "Vietnamese bistro and cafe.",
+  },
+];
+
+const fancyFood = [
+  {
+    name: "SALT",
+    description:
+      "Newest Michelin at the time, using produce from its own farms for reimagined Hungarian classics. Top recommendation.",
+  },
+  {
+    name: "Stand",
+    description:
+      "Voted best restaurant in Hungary in 2021, focused on modernised Hungarian food.",
+  },
+  { name: "MAK Bisztro", description: "Still on the shortlist." },
+  { name: "Babel", description: "Still on the shortlist." },
+  { name: "Costes", description: "Still on the shortlist." },
+  { name: "Costes Downtown", description: "Still on the shortlist." },
+  { name: "Onyx", description: "Still on the shortlist." },
+  {
+    name: "Tati",
+    description:
+      "A newer spot focused on elevated Hungarian cuisine and wines, with especially friendly service.",
+    href: "https://tatibudapest.com/",
+  },
+];
+
+const partySpots = [
+  {
+    name: "Telep",
+    description:
+      "Underground place with good DJs, cheap drinks, and actual local energy.",
+  },
+  {
+    name: "PONTOON",
+    description:
+      "Summer pop-up bar on the Pest side of Chain Bridge with live bands, DJs, and very good warm-weather vibes.",
+    note: "It was operating from a nearby ship during bridge renovations when this was written.",
+  },
+  {
+    name: "4Bro Downtown",
+    description:
+      "A clubbing option. Aether is in the basement and has the standout sound system.",
+  },
+  {
+    name: "Szimpla",
+    description:
+      "The original ruin bar. Very touristy now, still worth seeing once.",
+  },
+  {
+    name: "Fogashaz",
+    description:
+      "Another ruin bar and club complex, including LARM. Mileage may vary.",
+  },
+  {
+    name: "Aurora",
+    description:
+      "Alternative bar, cafe, and performance space. A little outside the standard route and worth it.",
+  },
+  {
+    name: "A38",
+    description: "Concert venue on a ship on the Danube.",
+  },
+];
+
+const coffeeSpots = [
+  {
+    name: "Dorado Cafe",
+    description:
+      "Best cafe in the city according to this list, using beans from Casino Mokka.",
+  },
+  {
+    name: "Ohana",
+    description:
+      "Newer place near Margaret Bridge with good coffee, sweets, wifi, and good work-friendly energy.",
+  },
+  { name: "Waycup", description: "Still on the shortlist." },
+  { name: "Banyai by Beans", description: "Still on the shortlist." },
+  { name: "Espresso Embassy", description: "Still on the shortlist." },
+  {
+    name: "Butter Brothers Bakery & Bistro",
+    description: "Excellent coffee and pastries.",
+  },
+  {
+    name: "Tamp & Pull Espresso Bar",
+    description:
+      "One of the first new-wave coffee places in Budapest and where the coffee obsession apparently started.",
+  },
+];
+
+const coworkingSpots = [
+  {
+    name: "Kaptar Coworking Budapest",
+    description:
+      "A well-loved coworking space in the heart of Pest near Deak Ferenc ter, with actual social energy rather than just silent Zoom rooms.",
+    note: "Ask about the lunch place next door if you want a good budget option.",
+    href: "https://kaptarbudapest.hu/",
+  },
+];
+
+const cafeWorkSpots = [
+  {
+    name: "Fabrik Specialty Coffee - Design - Workshop",
+    description:
+      "Great coffee and a dedicated upstairs area for working. Also community-oriented with workshops and events.",
+  },
+  {
+    name: "Madal Coffee Shop",
+    description:
+      "Especially the one near Jaszai Mari ter, which has a spacious basement, plugs, solid wifi, and reliably good coffee.",
+  },
+  {
+    name: "Flow Specialty Coffee Bar & Bistro",
+    description:
+      "Large space, plenty of food, and a good fit for quiet focus work. Be mindful with calls.",
+  },
+];
+
+const usefulLinks = [
+  {
+    name: "WeLoveBudapest",
+    href: "https://welovebudapest.com/en/",
+    description: "Current events, openings, and city recommendations.",
+  },
+  {
+    name: "Work-in-progress map",
+    href: "https://www.google.com/maps/d/u/0/edit?mid=10l-0HA_IywJrCopnEVzEp-rq3pYB76I&usp=sharing",
+    description: "Map of all the things from the original guide.",
+  },
+];
+---
+
+<Layout
+  title="Best of Budapest | Zoárd Manó Csoltai"
+  description="A hidden Budapest city guide with favourite sights, food, coffee, nightlife, and work spots."
+  navLinks={navLinks}
+  mainClass="relative z-10 mx-auto max-w-5xl px-5 pt-24 md:px-6 md:pt-28 lg:px-8 lg:pt-24"
+>
+  <section class="budapest-guide pb-16 md:pb-24">
+    <header class="budapest-hero mb-6 md:mb-8">
+      <div>
+        <p class="budapest-eyebrow">City Guide</p>
+        <h1 class="budapest-title">Best of Budapest</h1>
+        <p class="budapest-summary">
+          A practical list of cool places to see, eat at, drink at, and work
+          from in Budapest.
+        </p>
+      </div>
+      <div class="budapest-meta">
+        <p class="budapest-meta__label">Last updated</p>
+        <p class="budapest-meta__date">8 August 2023</p>
+        <p class="budapest-meta__text">
+          Imported from Notion. Some places may have changed since then.
+        </p>
+      </div>
+    </header>
+
+    <nav class="budapest-sticky-nav" aria-label="Categories">
+      <div class="budapest-sticky-nav__inner">
+        {
+          sectionLinks.map((link) => (
+            <a class="budapest-pill" href={link.href}>
+              <svg
+                class="budapest-pill__icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d={link.icon} />
+              </svg>
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+
+    <div class="budapest-sections">
+      <section id="see" class="budapest-section">
+        <div class="budapest-section__header">
+          <p class="budapest-eyebrow">See</p>
+          <h2 class="budapest-section__title">Places worth seeing</h2>
+        </div>
+        <div class="budapest-card-list">
+          {
+            sightseeing.map((spot) => (
+              <article class="budapest-card">
+                <h3 class="budapest-card__title">{spot.name}</h3>
+                <p class="budapest-card__body">{spot.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section id="must-dos" class="budapest-section">
+        <div class="budapest-section__header">
+          <p class="budapest-eyebrow">Must-dos</p>
+          <h2 class="budapest-section__title">Do not miss these</h2>
+        </div>
+        <div class="budapest-card-list">
+          {
+            mustDos.map((item) => (
+              <article class="budapest-card">
+                <h3 class="budapest-card__title">{item.name}</h3>
+                <p class="budapest-card__body">{item.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section id="eat" class="budapest-section">
+        <div class="budapest-section__header">
+          <p class="budapest-eyebrow">Eat</p>
+          <h2 class="budapest-section__title">Food picks</h2>
+          <p class="budapest-section__intro">
+            Originally written with a post-COVID caveat, so treat this as
+            taste-driven guidance rather than a current directory.
+          </p>
+        </div>
+
+        <div class="budapest-subsection">
+          <h3 class="budapest-subsection__title">Casual</h3>
+          <div class="budapest-card-list">
+            {
+              casualFood.map((spot) => (
+                <article class="budapest-card">
+                  <h4 class="budapest-card__title">{spot.name}</h4>
+                  <p class="budapest-card__body">{spot.description}</p>
+                </article>
+              ))
+            }
+          </div>
+          <aside class="budapest-note">
+            Bartok Bela street, where Caphe is, is worth a slow walk. Other
+            standouts from the original list: <strong
+              >Szatyor, Wombat, Kelet, ONO Poke, Pekmuhely, and Pagony.</strong
+            >
+          </aside>
+        </div>
+
+        <div class="budapest-subsection">
+          <h3 class="budapest-subsection__title">Fancy restaurants</h3>
+          <div class="budapest-card-list">
+            {
+              fancyFood.map((spot) => (
+                <article class="budapest-card">
+                  <h4 class="budapest-card__title">
+                    {spot.href ? (
+                      <a href={spot.href} target="_blank" rel="noreferrer">
+                        {spot.name}
+                      </a>
+                    ) : (
+                      spot.name
+                    )}
+                  </h4>
+                  <p class="budapest-card__body">{spot.description}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="budapest-subsection">
+          <h3 class="budapest-subsection__title">Bonus points</h3>
+          <article class="budapest-card budapest-card--media">
+            <div>
+              <h4 class="budapest-card__title">Try langos</h4>
+              <p class="budapest-card__body">
+                Heavy, fried, glorious Hungarian dough, usually piled with sour
+                cream, cheese, and garlic. Go to Lehel Market if you want the
+                authentic version, or find the one near Arany Janos metro
+                station.
+              </p>
+              <p class="budapest-card__body">
+                If you head further out along the Danube in Obuda, there is also
+                a good option around Romaipart.
+              </p>
+            </div>
+            <img
+              src="/langos-recipe-1.jpg"
+              alt="Langos with sour cream, cheese, and herbs"
+              loading="lazy"
+            />
+          </article>
+        </div>
+      </section>
+
+      <section id="party" class="budapest-section">
+        <div class="budapest-section__header">
+          <p class="budapest-eyebrow">Party</p>
+          <h2 class="budapest-section__title">Nightlife</h2>
+        </div>
+        <div class="budapest-card-list">
+          {
+            partySpots.map((spot) => (
+              <article class="budapest-card">
+                <div class="budapest-card__content">
+                  <h3 class="budapest-card__title">{spot.name}</h3>
+                  <p class="budapest-card__body">{spot.description}</p>
+                  {spot.note && <p class="budapest-card__meta">{spot.note}</p>}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section id="coffee" class="budapest-section">
+        <div class="budapest-section__header">
+          <p class="budapest-eyebrow">Coffee</p>
+          <h2 class="budapest-section__title">Coffee spots</h2>
+          <p class="budapest-section__intro">
+            Budapest has a strong third-wave scene and this list is
+            unapologetically opinionated about it.
+          </p>
+        </div>
+        <div class="budapest-card-list">
+          {
+            coffeeSpots.map((spot) => (
+              <article class="budapest-card">
+                <h3 class="budapest-card__title">{spot.name}</h3>
+                <p class="budapest-card__body">{spot.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section id="work" class="budapest-section">
+        <div class="budapest-section__header">
+          <p class="budapest-eyebrow">Work</p>
+          <h2 class="budapest-section__title">Places to work from</h2>
+          <p class="budapest-section__intro">
+            If you are taking calls from cafes, be respectful and keep buying
+            coffee.
+          </p>
+        </div>
+
+        <div class="budapest-subsection">
+          <h3 class="budapest-subsection__title">Coworking</h3>
+          <div class="budapest-card-list">
+            {
+              coworkingSpots.map((spot) => (
+                <article class="budapest-card">
+                  <div class="budapest-card__content">
+                    <h4 class="budapest-card__title">
+                      <a href={spot.href} target="_blank" rel="noreferrer">
+                        {spot.name}
+                      </a>
+                    </h4>
+                    <p class="budapest-card__body">{spot.description}</p>
+                    <p class="budapest-card__meta">{spot.note}</p>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="budapest-subsection">
+          <h3 class="budapest-subsection__title">Cafes</h3>
+          <div class="budapest-card-list">
+            {
+              cafeWorkSpots.map((spot) => (
+                <article class="budapest-card">
+                  <h4 class="budapest-card__title">{spot.name}</h4>
+                  <p class="budapest-card__body">{spot.description}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section id="links" class="budapest-section">
+        <div class="budapest-section__header">
+          <p class="budapest-eyebrow">Links</p>
+          <h2 class="budapest-section__title">Useful links</h2>
+        </div>
+        <div class="budapest-card-list">
+          {
+            usefulLinks.map((link) => (
+              <article class="budapest-card">
+                <h3 class="budapest-card__title">
+                  <a href={link.href} target="_blank" rel="noreferrer">
+                    {link.name}
+                  </a>
+                </h3>
+                <p class="budapest-card__body">{link.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .budapest-guide {
+    min-height: calc(100vh - 8rem);
+  }
+
+  .budapest-hero,
+  .budapest-section,
+  .budapest-sticky-nav__inner {
+    border: 1px solid rgb(255 255 255 / 0.08);
+    background: linear-gradient(
+      180deg,
+      rgb(18 26 35 / 0.82),
+      rgb(12 18 26 / 0.74)
+    );
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.03),
+      0 30px 80px rgb(0 0 0 / 0.18);
+    backdrop-filter: blur(14px);
+  }
+
+  .budapest-hero,
+  .budapest-section {
+    border-radius: 2rem;
+  }
+
+  .budapest-hero {
+    display: grid;
+    gap: 1.5rem;
+    padding: 1.75rem;
+  }
+
+  .budapest-eyebrow {
+    margin-bottom: 0.75rem;
+    color: rgb(37 99 235);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .budapest-title,
+  .budapest-section__title,
+  .budapest-subsection__title,
+  .budapest-card__title {
+    font-family: var(--font-serif);
+    color: rgb(248 250 252);
+    letter-spacing: -0.03em;
+  }
+
+  .budapest-title {
+    margin: 0;
+    font-size: clamp(3rem, 7vw, 5.25rem);
+    line-height: 0.96;
+  }
+
+  .budapest-summary,
+  .budapest-section__intro,
+  .budapest-card__body,
+  .budapest-meta__text,
+  .budapest-card__meta,
+  .budapest-note {
+    color: rgb(226 232 240 / 0.8);
+    line-height: 1.8;
+  }
+
+  .budapest-summary {
+    margin-top: 1rem;
+    max-width: 34rem;
+    font-size: 1.15rem;
+  }
+
+  .budapest-meta {
+    align-self: end;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 1.5rem;
+    background: rgb(255 255 255 / 0.02);
+    padding: 1.2rem 1.25rem;
+  }
+
+  .budapest-meta__label {
+    margin: 0 0 0.5rem;
+    color: rgb(37 99 235);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .budapest-meta__date {
+    margin: 0 0 0.5rem;
+    color: rgb(248 250 252);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .budapest-meta__text {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .budapest-sticky-nav {
+    position: sticky;
+    top: 1rem;
+    z-index: 20;
+    margin-bottom: 1.5rem;
+  }
+
+  .budapest-sticky-nav__inner {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    border-radius: 999px;
+    padding: 0.75rem;
+  }
+
+  .budapest-sticky-nav__inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .budapest-pill {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+    color: rgb(226 232 240 / 0.74);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .budapest-pill:hover {
+    border-color: rgb(255 255 255 / 0.16);
+    background: rgb(255 255 255 / 0.04);
+    color: rgb(248 250 252);
+  }
+
+  .budapest-pill__icon {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 auto;
+    fill: currentColor;
+    opacity: 0.88;
+  }
+
+  .budapest-sections {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .budapest-section {
+    padding: 1.5rem;
+  }
+
+  .budapest-section__header {
+    margin-bottom: 1.5rem;
+  }
+
+  .budapest-section__title {
+    margin: 0;
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    line-height: 0.98;
+  }
+
+  .budapest-section__intro {
+    margin: 1rem 0 0;
+    max-width: 42rem;
+    font-size: 1rem;
+  }
+
+  .budapest-subsection + .budapest-subsection {
+    margin-top: 2rem;
+  }
+
+  .budapest-subsection__title {
+    margin: 0 0 1rem;
+    font-size: clamp(1.75rem, 3vw, 2.4rem);
+  }
+
+  .budapest-card-list {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .budapest-card {
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 1.5rem;
+    background: rgb(255 255 255 / 0.02);
+    padding: 1.15rem 1.2rem;
+  }
+
+  .budapest-card__content > * + * {
+    margin-top: 0.8rem;
+  }
+
+  .budapest-card__title {
+    margin: 0;
+    font-size: 1.55rem;
+    line-height: 1.05;
+  }
+
+  .budapest-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .budapest-card__title a:hover {
+    color: rgb(96 165 250);
+  }
+
+  .budapest-card__body,
+  .budapest-card__meta {
+    margin: 0;
+    font-size: 1.02rem;
+  }
+
+  .budapest-card__meta {
+    color: rgb(226 232 240 / 0.58);
+  }
+
+  .budapest-note {
+    margin-top: 1rem;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 1.5rem;
+    background: rgb(255 255 255 / 0.02);
+    padding: 1rem 1.1rem;
+    font-size: 0.98rem;
+  }
+
+  .budapest-note strong {
+    color: rgb(248 250 252);
+    font-weight: 600;
+  }
+
+  .budapest-card--media img {
+    width: 100%;
+    height: 14rem;
+    object-fit: cover;
+    border-radius: 1.1rem;
+    border: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  @media (min-width: 768px) {
+    .budapest-hero {
+      grid-template-columns: minmax(0, 1fr) 18rem;
+      align-items: end;
+      padding: 2.1rem;
+    }
+
+    .budapest-section {
+      padding: 2rem;
+    }
+
+    .budapest-card {
+      display: grid;
+      grid-template-columns: minmax(13rem, 18rem) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+      padding: 1.35rem 1.4rem;
+    }
+
+    .budapest-card__content {
+      display: contents;
+    }
+
+    .budapest-card__content > * {
+      margin-top: 0;
+    }
+
+    .budapest-card__meta {
+      grid-column: 2;
+    }
+
+    .budapest-card--media {
+      grid-template-columns: minmax(0, 1fr) 18rem;
+    }
+
+    .budapest-card--media img {
+      height: 100%;
+      min-height: 12rem;
+    }
+  }
+</style>
