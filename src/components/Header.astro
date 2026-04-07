@@ -8,14 +8,16 @@ const { navLinks } = Astro.props;
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="pointer-events-none fixed inset-x-0 top-0 z-50 animate-slide-in px-4 py-4 lg:inset-auto lg:top-1/2 lg:right-6 lg:px-0 lg:py-0">
-  <div class="pointer-events-auto mx-auto flex max-w-6xl items-center justify-between rounded-[1.6rem] border border-white/8 bg-[#0e141b]/72 px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.22)] backdrop-blur-xl lg:mx-0 lg:w-auto lg:flex-col lg:justify-start lg:rounded-[2rem] lg:px-3 lg:py-3">
+<header class="pointer-events-none fixed inset-x-0 top-0 z-50 animate-slide-in px-0 py-0">
+  <div class="pointer-events-auto flex items-center justify-between border-b border-white/8 bg-[#0e141b]/72 px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.18)] backdrop-blur-xl lg:px-8 lg:py-3.5">
     <a
       href="/"
-      class="text-sm font-semibold tracking-[0.24em] text-white/70 uppercase lg:hidden"
+      class="flex items-center transition-transform duration-300 hover:scale-[1.02]"
       aria-label="Home link"
     >
-      Menu
+      <span class="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/6 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+        <img src="/zeo-logo-mark.svg" alt="" class="h-6 w-6 object-contain" />
+      </span>
     </a>
 
     <button
@@ -29,10 +31,10 @@ const currentPath = Astro.url.pathname;
     </button>
 
     <nav
-      class="absolute top-[calc(100%+0.85rem)] left-0 right-0 hidden rounded-[1.4rem] border border-white/10 bg-[#0e141b]/92 px-3 py-3 text-neutral shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl lg:static lg:block lg:w-auto lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-0"
+      class="absolute top-full left-0 right-0 hidden border-b border-white/10 bg-[#0e141b]/92 px-4 py-3 text-neutral shadow-[0_20px_60px_rgba(0,0,0,0.3)] backdrop-blur-xl lg:static lg:block lg:w-auto lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none"
       id="main-menu"
     >
-      <ul class="grid gap-1 lg:gap-2">
+      <ul class="grid gap-1 lg:flex lg:items-center lg:gap-2">
         {
           navLinks.map((link) => (
             <li class="relative">
@@ -46,7 +48,7 @@ const currentPath = Astro.url.pathname;
 
                   return (
                     <a
-                      class={`nav-item block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300 hover:text-white lg:min-w-[7.25rem] lg:px-3 lg:text-center ${
+                      class={`nav-item block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300 hover:text-white lg:min-w-[7rem] lg:px-4 lg:py-2.5 lg:text-center ${
                         isActive
                           ? "is-active bg-white/8 text-white ring-1 ring-white/10"
                           : "text-white/68"
@@ -128,17 +130,3 @@ const currentPath = Astro.url.pathname;
     }
   };
 </script>
-
-<style>
-  header {
-    animation-timeline: scroll();
-    animation-range: 0 650px;
-  }
-
-  @media (min-width: 1024px) {
-    header {
-      animation-timeline: auto;
-      animation-range: normal;
-    }
-  }
-</style>

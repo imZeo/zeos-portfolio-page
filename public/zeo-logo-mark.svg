@@ -1,0 +1,49 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 220 220"
+  fill="none"
+>
+  <circle cx="110" cy="110" r="110" fill="#0f1a2e" />
+  <circle cx="110" cy="110" r="108.75" stroke="#1e3a6e" stroke-width="2.5" />
+  <circle cx="110" cy="110" r="85" stroke="#1e3a6e" />
+  <path d="M0 110h220" stroke="#1e3a6e" stroke-width=".5" stroke-opacity=".4" />
+  <path d="M110 0v220" stroke="#1e3a6e" stroke-width=".5" stroke-opacity=".4" />
+  <path
+    d="M20 47A110 110 0 0 1 220 110"
+    stroke="#2563eb"
+    stroke-linecap="round"
+    stroke-width="6"
+  />
+  <path
+    d="M37 36A110 110 0 0 1 200 47"
+    stroke="#3b82f6"
+    stroke-linecap="round"
+    stroke-width="4"
+  />
+  <path
+    d="M55 27A110 110 0 0 1 184 37"
+    stroke="#60a5fa"
+    stroke-linecap="round"
+    stroke-width="2.5"
+  />
+  <path
+    d="M0 110A110 110 0 0 1 20 173"
+    stroke="#60a5fa"
+    stroke-linecap="round"
+    stroke-width="2.5"
+  />
+  <path
+    d="M20 173A110 110 0 0 1 110 220"
+    stroke="#93c5fd"
+    stroke-linecap="round"
+    stroke-width="1.5"
+  />
+  <circle cx="220" cy="110" r="4" fill="#3b82f6" />
+  <circle cx="0" cy="110" r="3" fill="#60a5fa" />
+  <circle cx="110" cy="0" r="3" fill="#60a5fa" />
+  <circle cx="110" cy="220" r="3" fill="#3b82f6" />
+  <path
+    fill="#fff"
+    d="M76 68h68v12l-52 60h52v12H76v-12l52-60H76z"
+  />
+</svg>

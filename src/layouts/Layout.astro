@@ -21,7 +21,7 @@ const {
   title = SITE_CONFIG.title,
   description = SITE_CONFIG.description,
   navLinks = SITE_CONFIG.navLinks,
-  mainClass = "relative z-10 mx-auto max-w-7xl px-5 pt-28 md:px-6 md:pt-32 lg:px-8 lg:pt-0 lg:pr-28",
+  mainClass = "relative z-10 mx-auto max-w-7xl px-5 pt-28 md:px-6 md:pt-32 lg:px-8 lg:pt-36",
 } = Astro.props;
 
 const canonicalBase = SITE_CONFIG.canonicalURL ?? Astro.url.origin;
@@ -30,7 +30,7 @@ const ogImgUrl = new URL(socialImage, canonicalBase).href;
 ---
 
 <!doctype html>
-<html lang={lang} class="scroll-pt-16 scroll-smooth">
+<html lang={lang} class="scroll-smooth scroll-pt-28 md:scroll-pt-32 lg:scroll-pt-36">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
