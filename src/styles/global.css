@@ -287,6 +287,15 @@ body::before {
   min-height: calc(100vh - 10rem);
 }
 
+.article-layout {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.article-body {
+  width: min(100%, 72ch);
+}
+
 .surface-panel {
   border: 1px solid rgb(255 255 255 / 0.08);
   border-radius: 1.75rem;
@@ -698,5 +707,17 @@ body::before {
 
   .article-prose--elevated {
     padding: 2.4rem 2.6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .article-layout {
+    grid-template-columns: minmax(13rem, 15rem) minmax(0, 1fr);
+    gap: clamp(2.5rem, 4vw, 4.5rem);
+    align-items: start;
+  }
+
+  .article-body {
+    width: min(100%, 74ch);
   }
 }
