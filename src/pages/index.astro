@@ -13,13 +13,13 @@ const featuredWriting = (
 ).sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf());
 ---
 
-<Layout>
-  <div class="md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-16 lg:gap-20 xl:gap-24">
+<Layout mainClass="relative z-10 mx-auto max-w-[96rem] px-5 pt-28 md:px-6 md:pt-32 lg:px-8 lg:pt-0 lg:pr-28">
+  <div class="home-layout">
     <aside class="md:sticky md:top-20 md:self-start">
       <Hero {...SITE_CONTENT.hero} />
     </aside>
 
-    <div class="md:pt-8">
+    <div class="home-content md:pt-8">
       <Experience experience={SITE_CONTENT.experience} />
       <Projects projects={SITE_CONTENT.projects} />
       <FeaturedWriting posts={featuredWriting} />

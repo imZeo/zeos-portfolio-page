@@ -287,6 +287,15 @@ body::before {
   min-height: calc(100vh - 10rem);
 }
 
+.home-layout {
+  display: grid;
+  gap: 3rem;
+}
+
+.home-content {
+  min-width: 0;
+}
+
 .article-layout {
   display: grid;
   gap: 2.5rem;
@@ -711,6 +720,12 @@ body::before {
 }
 
 @media (min-width: 1024px) {
+  .home-layout {
+    grid-template-columns: minmax(24rem, 36rem) minmax(34rem, 1fr);
+    gap: clamp(3rem, 5vw, 6rem);
+    align-items: start;
+  }
+
   .article-layout {
     grid-template-columns: minmax(13rem, 15rem) minmax(0, 1fr);
     gap: clamp(2.5rem, 4vw, 4.5rem);
@@ -719,5 +734,11 @@ body::before {
 
   .article-body {
     width: min(100%, 74ch);
+  }
+}
+
+@media (min-width: 1536px) {
+  .home-layout {
+    grid-template-columns: minmax(27rem, 38rem) minmax(38rem, 1fr);
   }
 }
