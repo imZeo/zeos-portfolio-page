@@ -1,6 +1,5 @@
 ---
 import Header from "@components/Header.astro";
-import BackgroundFX from "@components/BackgroundFX.astro";
 import "@fontsource/be-vietnam-pro";
 import "@fontsource-variable/gabarito";
 import "../styles/global.css";
@@ -59,7 +58,6 @@ const ogImgUrl = new URL(socialImage, canonicalBase).href;
     <SpeedInsights />
   </head>
   <body class="bg-black font-sans">
-    <BackgroundFX />
     <Header siteLogo={siteLogo} navLinks={navLinks} />
     <main class={mainClass}>
       <slot />

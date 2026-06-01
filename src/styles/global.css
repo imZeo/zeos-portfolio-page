@@ -72,14 +72,6 @@ body::before {
     linear-gradient(180deg, rgb(255 255 255 / 0.02), transparent 22rem);
 }
 
-.nebula-background {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
 .nebula-background__blob,
 .nebula-background__orbit,
 .nebula-background__veil,
