@@ -12,4 +12,14 @@ const writing = defineCollection({
   }),
 });
 
-export const collections = { writing };
+const recipes = defineCollection({
+  type: "content",
+  schema: z.object({
+    aliases: z.array(z.string()).default([]),
+    tags: z.array(z.string()).default([]),
+    link: z.string().url().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { writing, recipes };

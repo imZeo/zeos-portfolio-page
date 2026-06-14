@@ -1,0 +1,74 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+
+const recipes = (await getCollection("recipes", ({ data }) => !data.draft)).sort(
+  (a, b) => getRecipeTitle(a).localeCompare(getRecipeTitle(b)),
+);
+
+const navLinks = [{ text: "Home", href: "/" }];
+
+function getRecipeTitle(recipe: CollectionEntry<"recipes">) {
+  const slug = recipe.slug.split("/").at(-1) ?? recipe.slug;
+
+  return slug
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (letter: string) => letter.toUpperCase());
+}
+---
+
+<Layout
+  title="Recipes | Zoárd Manó Csoltai"
+  description="A quiet recipe shelf for home cooking notes."
+  navLinks={navLinks}
+  mainClass="relative z-10 mx-auto max-w-5xl px-5 pt-28 md:px-6 md:pt-32 lg:px-8 lg:pt-0 lg:pr-28"
+>
+  <section class="writing-shell py-16 md:py-24">
+    <header class="mb-12 max-w-3xl border-b border-white/8 pb-10">
+      <p class="mb-4 text-sm font-medium tracking-[0.2em] text-primary uppercase">
+        Recipes
+      </p>
+      <h1 class="mb-6 font-serif text-5xl font-bold tracking-tightest text-white md:text-7xl">
+        Kitchen notes.
+      </h1>
+      <p class="text-lg leading-8 text-neutral md:text-xl">
+        A low-key shelf for recipes synced from Markdown files.
+      </p>
+    </header>
+
+    <div class="grid gap-5 md:grid-cols-2">
+      {
+        recipes.map((recipe) => (
+          <article class="rounded-3xl border border-white/8 bg-[#121a23]/72 p-6 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1">
+            <h2 class="mb-3 font-serif text-3xl font-semibold text-white">
+              <a class="hover:text-primary" href={`/recipes/${recipe.slug}`}>
+                {getRecipeTitle(recipe)}
+              </a>
+            </h2>
+
+            {recipe.data.tags.length > 0 && (
+              <div class="mb-5 flex flex-wrap gap-2">
+                {recipe.data.tags.slice(0, 4).map((tag) => (
+                  <span class="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-white/70">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <a
+              class="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-white"
+              href={`/recipes/${recipe.slug}`}
+            >
+              Open recipe
+              <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
