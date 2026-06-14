@@ -4,6 +4,7 @@ import mdx from "@astrojs/mdx";
 import tailwindcss from "@tailwindcss/vite";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
+import remarkObsidianCallouts from "./src/utils/remarkObsidianCallouts.mjs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,7 +13,7 @@ export default defineConfig({
     service: passthroughImageService(),
   },
   markdown: {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, remarkObsidianCallouts],
     rehypePlugins: [rehypeSlug],
   },
   vite: {

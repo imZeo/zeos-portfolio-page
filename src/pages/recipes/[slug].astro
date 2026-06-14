@@ -1,0 +1,144 @@
+---
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const recipes = await getCollection("recipes", ({ data }) => !data.draft);
+
+  return recipes.map((recipe) => ({
+    params: { slug: recipe.slug },
+    props: { recipe },
+  }));
+}
+
+const { recipe } = Astro.props;
+const { Content } = await render(recipe);
+const title = getRecipeTitle(recipe);
+const servings = getRecipeServings(recipe);
+
+const navLinks = [{ text: "Home", href: "/" }];
+
+function getRecipeTitle(recipe: CollectionEntry<"recipes">) {
+  const slug = recipe.slug.split("/").at(-1) ?? recipe.slug;
+
+  return slug
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (letter: string) => letter.toUpperCase());
+}
+
+function getRecipeServings(recipe: CollectionEntry<"recipes">) {
+  const match = recipe.body.match(
+    /^>\s*\[!info\][+-]?\s*(?:#{1,6}\s*)?(.+\b(?:pax|servings?|serves)\b.*)$/im,
+  );
+
+  if (!match) {
+    return null;
+  }
+
+  return formatServings(match[1]);
+}
+
+function formatServings(value: string) {
+  const cleanValue = value
+    .replace(/\s+/g, " ")
+    .replace(/\bpax\b/i, "servings")
+    .replace(/^makes\s+/i, "")
+    .trim();
+
+  if (/^serves\b/i.test(cleanValue)) {
+    return cleanValue.replace(/^serves\b/i, "Serves");
+  }
+
+  if (/\bservings?\b/i.test(cleanValue)) {
+    return `Makes ${cleanValue}`;
+  }
+
+  return `Makes ${cleanValue} servings`;
+}
+---
+
+<Layout
+  title={`${title} | Recipes`}
+  description={`Recipe notes for ${title}.`}
+  navLinks={navLinks}
+  mainClass="relative z-10 mx-auto max-w-[88rem] px-5 pt-28 md:px-6 md:pt-32 lg:px-8 lg:pt-0 lg:pr-28"
+>
+  <article class="writing-shell py-16 md:py-24">
+    <div class="mb-12">
+      <a
+        class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#121a23]/70 px-4 py-2 text-sm font-medium text-neutral backdrop-blur-sm hover:text-white"
+        href="/recipes"
+      >
+        <span aria-hidden="true">←</span>
+        Back to recipes
+      </a>
+    </div>
+
+    <div class="article-layout">
+      <aside class="article-sidebar lg:sticky lg:top-28 lg:self-start">
+        <div class="rounded-3xl border border-white/8 bg-[#121a23]/72 p-5 backdrop-blur-sm">
+          <p class="mb-3 text-xs font-medium tracking-[0.18em] text-primary uppercase">
+            Recipe
+          </p>
+          <p class="mb-6 font-serif text-3xl font-semibold leading-tight text-white">
+            {title}
+          </p>
+
+          {servings && (
+            <div class="mb-6 rounded-2xl border border-white/8 bg-white/4 px-4 py-3">
+              <p class="text-xs font-medium tracking-[0.18em] text-primary uppercase">
+                Yield
+              </p>
+              <p class="mt-2 text-sm leading-6 text-white/85">{servings}</p>
+            </div>
+          )}
+
+          {recipe.data.tags.length > 0 && (
+            <>
+              <p class="mb-3 text-xs font-medium tracking-[0.18em] text-primary uppercase">
+                Tags
+              </p>
+              <div class="mb-6 flex flex-wrap gap-2">
+                {recipe.data.tags.map((tag) => (
+                  <span class="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-white/70">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </>
+          )}
+
+          {recipe.data.link && (
+            <a
+              class="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-white"
+              href={recipe.data.link}
+              rel="noreferrer"
+              target="_blank"
+            >
+              Original source
+              <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+      </aside>
+
+      <div>
+        <header class="mb-12 border-b border-white/8 pb-10">
+          <p class="mb-4 text-sm font-medium tracking-[0.2em] text-primary uppercase">
+            Recipe
+          </p>
+          <h1 class="font-serif text-5xl font-bold tracking-tightest text-white md:text-7xl">
+            {title}
+          </h1>
+        </header>
+
+        <div class="article-body article-prose article-prose--elevated recipe-prose">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
