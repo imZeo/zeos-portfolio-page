@@ -20,6 +20,10 @@ const servings = getRecipeServings(recipe);
 const navLinks = [{ text: "Home", href: "/" }];
 
 function getRecipeTitle(recipe: CollectionEntry<"recipes">) {
+  if (recipe.data.title) {
+    return recipe.data.title;
+  }
+
   const slug = recipe.slug.split("/").at(-1) ?? recipe.slug;
 
   return slug
@@ -79,63 +83,81 @@ function formatServings(value: string) {
 
     <div class="article-layout">
       <aside class="article-sidebar lg:sticky lg:top-28 lg:self-start">
-        <div class="rounded-3xl border border-white/8 bg-[#121a23]/72 p-5 backdrop-blur-sm">
-          <p class="mb-3 text-xs font-medium tracking-[0.18em] text-primary uppercase">
+        <div
+          class="rounded-3xl border border-white/8 bg-[#121a23]/72 p-5 backdrop-blur-sm"
+        >
+          <p
+            class="mb-3 text-xs font-medium tracking-[0.18em] text-primary uppercase"
+          >
             Recipe
           </p>
-          <p class="mb-6 font-serif text-3xl font-semibold leading-tight text-white">
+          <p
+            class="mb-6 font-serif text-3xl leading-tight font-semibold text-white"
+          >
             {title}
           </p>
 
-          {servings && (
-            <div class="mb-6 rounded-2xl border border-white/8 bg-white/4 px-4 py-3">
-              <p class="text-xs font-medium tracking-[0.18em] text-primary uppercase">
-                Yield
-              </p>
-              <p class="mt-2 text-sm leading-6 text-white/85">{servings}</p>
-            </div>
-          )}
-
-          {recipe.data.tags.length > 0 && (
-            <>
-              <p class="mb-3 text-xs font-medium tracking-[0.18em] text-primary uppercase">
-                Tags
-              </p>
-              <div class="mb-6 flex flex-wrap gap-2">
-                {recipe.data.tags.map((tag) => (
-                  <span class="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-white/70">
-                    {tag}
-                  </span>
-                ))}
+          {
+            servings && (
+              <div class="mb-6 rounded-2xl border border-white/8 bg-white/4 px-4 py-3">
+                <p class="text-xs font-medium tracking-[0.18em] text-primary uppercase">
+                  Yield
+                </p>
+                <p class="mt-2 text-sm leading-6 text-white/85">{servings}</p>
               </div>
-            </>
-          )}
+            )
+          }
 
-          {recipe.data.link && (
-            <a
-              class="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-white"
-              href={recipe.data.link}
-              rel="noreferrer"
-              target="_blank"
-            >
-              Original source
-              <span aria-hidden="true">↗</span>
-            </a>
-          )}
+          {
+            recipe.data.tags.length > 0 && (
+              <>
+                <p class="mb-3 text-xs font-medium tracking-[0.18em] text-primary uppercase">
+                  Tags
+                </p>
+                <div class="mb-6 flex flex-wrap gap-2">
+                  {recipe.data.tags.map((tag) => (
+                    <span class="rounded-full border border-white/10 px-3 py-1 text-[11px] tracking-[0.16em] text-white/70 uppercase">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </>
+            )
+          }
+
+          {
+            recipe.data.link && (
+              <a
+                class="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-white"
+                href={recipe.data.link}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Original source
+                <span aria-hidden="true">↗</span>
+              </a>
+            )
+          }
         </div>
       </aside>
 
       <div>
         <header class="mb-12 border-b border-white/8 pb-10">
-          <p class="mb-4 text-sm font-medium tracking-[0.2em] text-primary uppercase">
+          <p
+            class="mb-4 text-sm font-medium tracking-[0.2em] text-primary uppercase"
+          >
             Recipe
           </p>
-          <h1 class="font-serif text-5xl font-bold tracking-tightest text-white md:text-7xl">
+          <h1
+            class="font-serif text-5xl font-bold tracking-tightest text-white md:text-7xl"
+          >
             {title}
           </h1>
         </header>
 
-        <div class="article-body article-prose article-prose--elevated recipe-prose">
+        <div
+          class="article-body article-prose article-prose--elevated recipe-prose"
+        >
           <Content />
         </div>
       </div>

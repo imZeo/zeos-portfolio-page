@@ -3,13 +3,17 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 
-const recipes = (await getCollection("recipes", ({ data }) => !data.draft)).sort(
-  (a, b) => getRecipeTitle(a).localeCompare(getRecipeTitle(b)),
-);
+const recipes = (
+  await getCollection("recipes", ({ data }) => !data.draft)
+).sort((a, b) => getRecipeTitle(a).localeCompare(getRecipeTitle(b)));
 
 const navLinks = [{ text: "Home", href: "/" }];
 
 function getRecipeTitle(recipe: CollectionEntry<"recipes">) {
+  if (recipe.data.title) {
+    return recipe.data.title;
+  }
+
   const slug = recipe.slug.split("/").at(-1) ?? recipe.slug;
 
   return slug
@@ -28,10 +32,14 @@ function getRecipeTitle(recipe: CollectionEntry<"recipes">) {
 >
   <section class="writing-shell py-16 md:py-24">
     <header class="mb-12 max-w-3xl border-b border-white/8 pb-10">
-      <p class="mb-4 text-sm font-medium tracking-[0.2em] text-primary uppercase">
+      <p
+        class="mb-4 text-sm font-medium tracking-[0.2em] text-primary uppercase"
+      >
         Recipes
       </p>
-      <h1 class="mb-6 font-serif text-5xl font-bold tracking-tightest text-white md:text-7xl">
+      <h1
+        class="mb-6 font-serif text-5xl font-bold tracking-tightest text-white md:text-7xl"
+      >
         Kitchen notes.
       </h1>
       <p class="text-lg leading-8 text-neutral md:text-xl">
@@ -52,7 +60,7 @@ function getRecipeTitle(recipe: CollectionEntry<"recipes">) {
             {recipe.data.tags.length > 0 && (
               <div class="mb-5 flex flex-wrap gap-2">
                 {recipe.data.tags.slice(0, 4).map((tag) => (
-                  <span class="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-white/70">
+                  <span class="rounded-full border border-white/10 px-3 py-1 text-[11px] tracking-[0.16em] text-white/70 uppercase">
                     {tag}
                   </span>
                 ))}

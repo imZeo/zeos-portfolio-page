@@ -15,6 +15,8 @@ const writing = defineCollection({
 const recipes = defineCollection({
   type: "content",
   schema: z.object({
+    title: z.string().optional(),
+    description: z.string().optional(),
     aliases: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
     link: z.string().url().optional(),
