@@ -1,10 +1,10 @@
 import type { SiteConfig, SiteContent } from "../types";
 
 export const SITE_CONFIG: SiteConfig = {
-  title: "Zoárd Manó Csoltai | TechOps, Identity & Automation",
+  title: "Zoárd Manó Csoltai | IT Systems, Identity & Automation",
   author: "Zoárd Manó Csoltai",
   description:
-    "Senior TechOps Engineer in Copenhagen leading identity, access, fleet, and internal automation at scale.",
+    "IT Systems Engineer in Copenhagen focused on identity, access, and internal automation at scale.",
   lang: "en",
   siteLogo: "/zeo-logo.png",
   navLinks: [
@@ -26,7 +26,7 @@ export const SITE_CONTENT: SiteContent = {
     name: "Zoárd Manó Csoltai",
     specialty: "Internal Tech and Identity Engineering at Scale",
     summary:
-      "Self-taught TechOps engineer leading identity and internal technology automation at a regulated fintech. I design and maintain compliant systems that reduce user friction across SSO, role-based access control, fleet management, and identity-driven automations.",
+      "Self-taught IT systems engineer focused on identity and internal technology automation at scale. I design and maintain compliant systems that reduce user friction across SSO, role-based access control, fleet management, and identity-driven automations.",
     email: "hello@zmcsoltai.com",
     secondaryLinks: [
       { text: "LinkedIn", href: "https://www.linkedin.com/in/zmcsoltai/" },
@@ -40,10 +40,20 @@ export const SITE_CONTENT: SiteContent = {
   },
   experience: [
     {
+      company: "Trustpilot",
+      position: "IT Systems Engineer III",
+      startDate: "Aug 2026",
+      endDate: "Present",
+      summary: [
+        "Primary owner of identity and authentication policy in Microsoft Entra, shaping secure and dependable access across the organisation.",
+        "Focused on creating identity experiences that pair robust controls with thoughtful, low-friction interactions for employees.",
+      ],
+    },
+    {
       company: "Pleo",
       position: "Senior TechOps Engineer",
       startDate: "Aug 2021",
-      endDate: "Present",
+      endDate: "Jul 2026",
       summary: [
         "Own identity, access, fleet, and automation for 1,000+ users in a product-led fintech, partnering closely with People, SRE, DevX, and People Tech.",
         "Led company-wide authentication and SSO rollout, using convention-based Okta group minting to push access into Slack, Google, and GitHub automatically.",
