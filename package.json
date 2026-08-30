@@ -28,5 +28,5 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1"
   },
-  "packageManager": "pnpm@11.24.0"
+  "packageManager": "pnpm@10.18.2"
 }
