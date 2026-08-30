@@ -1,0 +1,543 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+const navLinks = [
+  { text: "Home", href: "/" },
+  { text: "Writing", href: "/writing" },
+];
+
+const icons = {
+  areas:
+    "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Zm0 12.25A4.75 4.75 0 1 1 12 7.25a4.75 4.75 0 0 1 0 9.5Zm0-2A2.75 2.75 0 1 0 12 9.25a2.75 2.75 0 0 0 0 5.5Z",
+  bakeries:
+    "M12 2.75 14.85 8.53l6.38.93-4.61 4.49 1.09 6.35L12 17.3l-5.71 3 1.09-6.35-4.61-4.49 6.38-.93L12 2.75Z",
+  eat: "M7.5 3.5v7.25a2.75 2.75 0 0 1-2.75 2.75V20a1 1 0 1 1-2 0v-6.5A2.75 2.75 0 0 1 0 10.75V3.5a1 1 0 1 1 2 0v4h1.5v-4a1 1 0 1 1 2 0v4H7v-4a1 1 0 1 1 2 0Zm8.75 0c2.07 0 3.75 1.91 3.75 4.25 0 1.71-.9 3.18-2.19 3.86V20a1 1 0 1 1-2 0V11.61c-1.29-.68-2.18-2.15-2.18-3.86 0-2.34 1.67-4.25 3.74-4.25h.88Z",
+  party:
+    "M13.5 2.75a1 1 0 0 1 1 1V6h3.75a1 1 0 0 1 .7 1.71l-4.45 4.46V20a1 1 0 1 1-2 0v-7.83L8.05 7.7A1 1 0 0 1 8.75 6H12V3.75a1 1 0 0 1 1-1h.5Z",
+  coffee:
+    "M4 5.5h11a1 1 0 0 1 1 1V8h1.5A3.5 3.5 0 0 1 21 11.5v.25A3.25 3.25 0 0 1 17.75 15H17a5 5 0 0 1-5 4H8A5 5 0 0 1 3 14V6.5a1 1 0 0 1 1-1Zm12 7.5h1.75A1.25 1.25 0 0 0 19 11.75v-.25A1.5 1.5 0 0 0 17.5 10H16v3Zm-8.5 7.75a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2h-6Z",
+};
+
+type GuideItem = {
+  name: string;
+  description?: string;
+  href?: string;
+  note?: string;
+};
+
+type GuideSection = {
+  id: string;
+  label: string;
+  title: string;
+  intro?: string;
+  icon: string;
+  items: GuideItem[];
+};
+
+const sections: GuideSection[] = [
+  {
+    id: "restaurants",
+    label: "Restaurants",
+    title: "Places to eat",
+    icon: icons.eat,
+    items: [
+      {
+        name: "The Olive Kitchen & Bar",
+        description:
+          "I used to work here. 10/10, great value for money, and amazing service.",
+      },
+      { name: "Maple" },
+      {
+        name: "Omar",
+        description:
+          "Great, great food. They also have a sister restaurant, LAMAR.",
+      },
+      {
+        name: "Martini House",
+        description:
+          "A bit outside the centre, but a really good Italian-American restaurant.",
+      },
+      {
+        name: "Kūkai Ramen",
+        description:
+          "The best ramen in the city right now, but a bit far out. Ramen to Biiru is a decent second choice.",
+      },
+      {
+        name: "Aamanns 1921",
+        description: "Probably the best smørrebrød experience in Copenhagen.",
+      },
+      {
+        name: "Café Dyrehaven",
+        description: "A very cosy little café that does a great brunch.",
+      },
+      {
+        name: "WarPigs",
+        description: "If you are into meat and that sort of thing.",
+      },
+      {
+        name: "Jah Izakaya",
+        description:
+          "Just an all-round great dining experience. The sake menu is omnomnom.",
+      },
+      {
+        name: "Marv & Ben",
+        description:
+          "If you want one fancy-ass dinner, this is my recommendation.",
+      },
+      { name: "Latin Geisha" },
+    ],
+  },
+  {
+    id: "cafes",
+    label: "Cafés",
+    title: "Coffee spots",
+    intro:
+      "I am a coffee nerd, and these are the places I rotate through because they are making fancy shizzle.",
+    icon: icons.coffee,
+    items: [
+      { name: "Alice" },
+      { name: "Democratic Cafe" },
+      { name: "Komuna" },
+      {
+        name: "April",
+        description:
+          "Definitely the fanciest and most expensive, but possibly the best coffee you will ever have.",
+      },
+      { name: "Cabin" },
+      { name: "Roast" },
+      { name: "ORSA", description: "Vesterbro." },
+      { name: "La Cabra" },
+    ],
+  },
+  {
+    id: "bmos",
+    label: "BMOs",
+    title: "Bakeries with great BMOs",
+    intro:
+      "BMO means bolle med ost: a bun with cheese. Once humble fare, it is now super fancy, and Copenhagen's bakeries compete over who makes the best one.",
+    icon: icons.bakeries,
+    items: [
+      { name: "Alice" },
+      { name: "Andersen" },
+      { name: "Tyr" },
+      { name: "Albatross & Venner" },
+      { name: "Andersen & Maillard" },
+    ],
+  },
+  {
+    id: "nightlife",
+    label: "Nightlife",
+    title: "Bars, cocktails, and clubbing",
+    icon: icons.party,
+    items: [
+      { name: "No Stress" },
+      { name: "Rendezvous" },
+      { name: "Strøm" },
+      { name: "Bar Deco" },
+      { name: "The Barking Dog" },
+      {
+        name: "Module & Hangaren",
+        description: "For electronic music.",
+      },
+      { name: "Bibendum", description: "A cosy wine bar." },
+      { name: "not your USUAL wine bar" },
+    ],
+  },
+  {
+    id: "areas",
+    label: "Areas",
+    title: "Cool areas",
+    icon: icons.areas,
+    items: [
+      {
+        name: "Meatpacking District",
+        description: "Restaurants, clubs, and bars.",
+      },
+      {
+        name: "Reffen",
+        description:
+          "A bit further out, so a bike is recommended. Street food, museums, and watching the sunset with a drink. A must-do.",
+      },
+      {
+        name: "Islands Brygge and Kalvebod Brygge",
+        description:
+          "Two outdoorsy places to take a dip in the harbour. It is one of the biggest joys of a Danish summer.",
+      },
+      {
+        name: "Papirøen and Broens",
+        description:
+          "Another place to chill by the water with street food. The food is not the best, but the area makes up for it. You can also head a little south to Nærvær and grab a nice bottle of wine.",
+      },
+      {
+        name: "Assistens Kirkegård",
+        description:
+          "It is a cemetery, but not a sacred ‘do not go there’ place. It is for people and for joy. A bit further north is Jægersborggade, with cafés and boutique shops.",
+      },
+    ],
+  },
+];
+---
+
+<Layout
+  title="Best of Copenhagen | Zoárd Manó Csoltai"
+  description="A Copenhagen city guide with favourite restaurants, cafés, bakeries, nightlife, and areas to explore."
+  navLinks={navLinks}
+  mainClass="relative z-10 mx-auto max-w-5xl px-5 pt-24 md:px-6 md:pt-28 lg:px-8 lg:pt-24"
+>
+  <section class="copenhagen-guide pb-16 md:pb-24">
+    <header class="copenhagen-hero mb-6 md:mb-8">
+      <div>
+        <p class="copenhagen-eyebrow">City Guide</p>
+        <h1 class="copenhagen-title">Best of Copenhagen</h1>
+        <p class="copenhagen-summary">
+          A practical list of cool places to see, eat at, and drink at in
+          Copenhagen.
+          <span class="copenhagen-summary__cta">
+            If you think I should add something,
+            <a href="mailto:hello@zmcsoltai.com">drop me a line</a> or
+            <a
+              href="https://github.com/imZeo/zeos-portfolio-page/blob/main/src/pages/best-of-copenhagen.astro"
+              target="_blank"
+              rel="noreferrer">raise a PR</a
+            >.
+          </span>
+        </p>
+      </div>
+      <div class="copenhagen-meta">
+        <p class="copenhagen-meta__label">Last updated</p>
+        <p class="copenhagen-meta__date">30 August 2026</p>
+        <p class="copenhagen-meta__text">
+          A personal list, so strong opinions are included.
+        </p>
+      </div>
+    </header>
+
+    <nav class="copenhagen-sticky-nav" aria-label="Categories">
+      <div class="copenhagen-sticky-nav__inner">
+        {
+          sections.map((section) => (
+            <a class="copenhagen-pill" href={`#${section.id}`}>
+              <svg
+                class="copenhagen-pill__icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d={section.icon} />
+              </svg>
+              {section.label}
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+
+    <div class="copenhagen-sections">
+      {
+        sections.map((section) => (
+          <section id={section.id} class="copenhagen-section">
+            <div class="copenhagen-section__header">
+              <p class="copenhagen-eyebrow">{section.label}</p>
+              <h2 class="copenhagen-section__title">{section.title}</h2>
+              {section.intro && (
+                <p class="copenhagen-section__intro">{section.intro}</p>
+              )}
+            </div>
+
+            {section.items.length > 0 && (
+              <div class="copenhagen-card-list">
+                {section.items.map((item) => (
+                  <article class="copenhagen-card">
+                    <div class="copenhagen-card__content">
+                      <h3 class="copenhagen-card__title">
+                        {item.href ? (
+                          <a href={item.href} target="_blank" rel="noreferrer">
+                            {item.name}
+                          </a>
+                        ) : (
+                          item.name
+                        )}
+                      </h3>
+                      {item.description && (
+                        <p class="copenhagen-card__body">{item.description}</p>
+                      )}
+                      {item.note && (
+                        <p class="copenhagen-card__meta">{item.note}</p>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </section>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .copenhagen-guide {
+    min-height: calc(100vh - 8rem);
+  }
+
+  .copenhagen-hero,
+  .copenhagen-section,
+  .copenhagen-sticky-nav__inner {
+    border: 1px solid rgb(255 255 255 / 0.08);
+    background: linear-gradient(
+      180deg,
+      rgb(18 26 35 / 0.82),
+      rgb(12 18 26 / 0.74)
+    );
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.03),
+      0 30px 80px rgb(0 0 0 / 0.18);
+    backdrop-filter: blur(14px);
+  }
+
+  .copenhagen-hero,
+  .copenhagen-section {
+    border-radius: 2rem;
+  }
+
+  .copenhagen-hero {
+    display: grid;
+    gap: 1.5rem;
+    padding: 1.75rem;
+  }
+
+  .copenhagen-eyebrow {
+    margin-bottom: 0.75rem;
+    color: rgb(37 99 235);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .copenhagen-title,
+  .copenhagen-section__title,
+  .copenhagen-card__title {
+    font-family: var(--font-serif);
+    color: rgb(248 250 252);
+    letter-spacing: -0.03em;
+  }
+
+  .copenhagen-title {
+    margin: 0;
+    font-size: clamp(3rem, 7vw, 5.25rem);
+    line-height: 0.96;
+  }
+
+  .copenhagen-summary,
+  .copenhagen-section__intro,
+  .copenhagen-card__body,
+  .copenhagen-meta__text,
+  .copenhagen-card__meta {
+    color: rgb(226 232 240 / 0.8);
+    line-height: 1.8;
+  }
+
+  .copenhagen-summary {
+    margin-top: 1rem;
+    max-width: 34rem;
+    font-size: 1.15rem;
+  }
+
+  .copenhagen-summary__cta {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .copenhagen-summary__cta a {
+    color: rgb(96 165 250);
+    text-underline-offset: 0.2em;
+  }
+
+  .copenhagen-summary__cta a:hover {
+    color: rgb(147 197 253);
+  }
+
+  .copenhagen-meta {
+    align-self: end;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 1.5rem;
+    background: rgb(255 255 255 / 0.02);
+    padding: 1.2rem 1.25rem;
+  }
+
+  .copenhagen-meta__label {
+    margin: 0 0 0.5rem;
+    color: rgb(37 99 235);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .copenhagen-meta__date {
+    margin: 0 0 0.5rem;
+    color: rgb(248 250 252);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .copenhagen-meta__text {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .copenhagen-sticky-nav {
+    position: sticky;
+    top: 1rem;
+    z-index: 20;
+    margin-bottom: 1.5rem;
+  }
+
+  .copenhagen-sticky-nav__inner {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    border-radius: 999px;
+    padding: 0.75rem;
+  }
+
+  .copenhagen-sticky-nav__inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .copenhagen-pill {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+    color: rgb(226 232 240 / 0.74);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .copenhagen-pill:hover {
+    border-color: rgb(255 255 255 / 0.16);
+    background: rgb(255 255 255 / 0.04);
+    color: rgb(248 250 252);
+  }
+
+  .copenhagen-pill__icon {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 auto;
+    fill: currentColor;
+    opacity: 0.88;
+  }
+
+  .copenhagen-sections {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .copenhagen-section {
+    padding: 1.5rem;
+  }
+
+  .copenhagen-section__header {
+    margin-bottom: 1.5rem;
+  }
+
+  .copenhagen-section__title {
+    margin: 0;
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    line-height: 0.98;
+  }
+
+  .copenhagen-section__intro {
+    margin: 1rem 0 0;
+    max-width: 42rem;
+    font-size: 1rem;
+  }
+
+  .copenhagen-card-list {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .copenhagen-card {
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 1.5rem;
+    background: rgb(255 255 255 / 0.02);
+    padding: 1.15rem 1.2rem;
+  }
+
+  .copenhagen-card__content > * + * {
+    margin-top: 0.8rem;
+  }
+
+  .copenhagen-card__title {
+    margin: 0;
+    font-size: 1.55rem;
+    line-height: 1.05;
+  }
+
+  .copenhagen-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .copenhagen-card__title a:hover {
+    color: rgb(96 165 250);
+  }
+
+  .copenhagen-card__body,
+  .copenhagen-card__meta {
+    margin: 0;
+    font-size: 1.02rem;
+  }
+
+  .copenhagen-card__meta {
+    color: rgb(226 232 240 / 0.58);
+  }
+
+  @media (min-width: 768px) {
+    .copenhagen-hero {
+      grid-template-columns: minmax(0, 1fr) 18rem;
+      align-items: end;
+      padding: 2.1rem;
+    }
+
+    .copenhagen-section {
+      padding: 2rem;
+    }
+
+    .copenhagen-card {
+      display: grid;
+      grid-template-columns: minmax(13rem, 18rem) minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+      padding: 1.35rem 1.4rem;
+    }
+
+    .copenhagen-card__content {
+      display: contents;
+    }
+
+    .copenhagen-card__content > * {
+      margin-top: 0;
+    }
+
+    .copenhagen-card__title:only-child {
+      grid-column: 1 / -1;
+    }
+
+    .copenhagen-card__meta {
+      grid-column: 2;
+    }
+  }
+</style>

@@ -289,6 +289,15 @@ const usefulLinks = [
         <p class="budapest-summary">
           A practical list of cool places to see, eat at, drink at, and work
           from in Budapest.
+          <span class="budapest-summary__cta">
+            If you think I should add something,
+            <a href="mailto:hello@zmcsoltai.com">drop me a line</a> or
+            <a
+              href="https://github.com/imZeo/zeos-portfolio-page/blob/main/src/pages/best-of-budapest.astro"
+              target="_blank"
+              rel="noreferrer">raise a PR</a
+            >.
+          </span>
         </p>
       </div>
       <div class="budapest-meta">
@@ -611,6 +620,21 @@ const usefulLinks = [
     margin-top: 1rem;
     max-width: 34rem;
     font-size: 1.15rem;
+  }
+
+  .budapest-summary__cta {
+    display: block;
+    margin-top: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .budapest-summary__cta a {
+    color: rgb(96 165 250);
+    text-underline-offset: 0.2em;
+  }
+
+  .budapest-summary__cta a:hover {
+    color: rgb(147 197 253);
   }
 
   .budapest-meta {
