@@ -46,7 +46,9 @@ export const SITE_CONTENT: SiteContent = {
       endDate: "Present",
       summary: [
         "Primary owner of identity and authentication policy in Microsoft Entra, shaping secure and dependable access across the organisation.",
-        "Focused on creating identity experiences that pair robust controls with thoughtful, low-friction interactions for employees.",
+	"Design and improve identity governance, access controls, and authentication workflows, balancing security requirements with a frictionless employee experience.",
+	"Drive improvements to identity infrastructure through automation, standardisation, and the reduction of operational complexity and manual intervention.",
+	"Work across Security, IT, and business stakeholders to translate organisational requirements into scalable, maintainable identity solutions.",
       ],
     },
     {
